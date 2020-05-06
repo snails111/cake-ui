@@ -1,6 +1,6 @@
 export { default as Block } from "./components/Block";
 
-// export { default as TableData } from "./components/TableData/tableData";
+export { default as TableData } from "./components/TableData/tableData";
 // export { default as DraggableModal } from "./components/DraggableModal/draggableModal";
 // export { default as DraggableFormModal } from "./components/DraggableModal/draggableFormModal";
 // export { default as CheckTagGroup } from "./components/CheckTagGroup/checkTagGroup";

@@ -29,6 +29,10 @@
     "website:clean": "rimraf examples/dist",
     "website:build": "cross-env NODE_ENV=production webpack"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcwebgroup/cake-ui.git"
+  },
   "author": "crisBai",
   "license": "MIT",
   "files": [
@@ -96,14 +100,18 @@
     "rollup-plugin-uglify": "^3.0.0",
     "standard-version": "^4.2.0",
     "style-loader": "^0.20.0",
-    "uglifyjs-webpack-plugin": "^1.2.3",
-    "webpack": "^3.6.0",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "webpack": "^3.12.0",
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
     "antd": "^4.2.0",
     "classnames": "^2.2.0",
-    "prop-types": "^15.5.0"
+    "prop-types": "^15.5.0",
+    "react-loadable": "^5.5.0",
+    "react-router-dom": "^5.1.2",
+    "react-syntax-highlighter": "^12.2.1"
   },
   "jest": {
     "roots": [
@@ -111,11 +119,5 @@
     ],
     "collectCoverage": true,
     "testRegex": "/__tests__/.+-test\\.js$"
-  },
-  "lint-staged": {
-    "src/**/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }

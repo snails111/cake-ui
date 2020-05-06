@@ -1,5 +1,5 @@
 # cake-UI
-根据antd二次开发的前端UI组件库，文档地址：https://lcwebgroup.github.io/cake-ui-doc/build/content/index.html#/
+根据antd 4.0二次开发的前端UI组件库，文档地址：https://lcwebgroup.github.io/cake-ui-doc/build/content/index.html#/
 
 # webpack.config.js
 作用是通过npm start运行本地开发时的一些配置
