@@ -1,15 +1,22 @@
-import React from "react"
+import React,{Component} from "react"
 import { Link } from "react-router-dom"
 import {
     Layout, Menu,
 } from 'antd';
 import { TagOutlined,TableOutlined,PieChartOutlined } from '@ant-design/icons';
-  
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 
 const menus =[
+    {
+        url:"searchForm",
+        text:"SearchForm"
+    },
+    {
+        url:"tableData",
+        text:"TableData"
+    },
     {
         url:"form",
         text:"Form"
@@ -19,51 +26,94 @@ const menus =[
         text:"PopForm"
     },
     {
-        url:"searchForm",
-        text:"SearchForm"
-    },
-    {
-        url:"table",
-        text:"TableData"
-    },
-    {
-        url:"tagGroup",
-        text:"CheckTagGroup"
-    },
-    {
-        url:"draggle",
+        url:"draggableModal",
         text:"DraggableModal"
+    },
+    {
+        url:"draggablePopForm",
+        text:"DraggablePopForm"
+    },
+    {
+        url:"checkTagGroup",
+        text:"CheckTagGroup"
     },
     {
         url:"editor",
         text:"WangEditor"
     },
     {
-        url:"transferTag",
-        text:"TransferTag"
+        url:"tree",
+        text:"Tree"
     },
     {
-        url:"transferSelectTag",
-        text:"TransferSelectTag"
+        url:"slider",
+        text:"Slider"
+    },
+    {
+        url:"steps",
+        text:"Steps"
+    },
+    {
+        url:"button",
+        text:"Button"
+    },
+    {
+        url:"badge",
+        text:"Badge"
+    },
+    {
+        url:"radioAndCheckbox",
+        text:"RadioAndCheckbox"
+    },
+    {
+        url:"switch",
+        text:"Switch"
+    },
+    {
+        url:"inputAndSelect",
+        text:"InputAndSelect"
+    },
+    {
+        url:"datePicker",
+        text:"DatePicker"
+    },
+    {
+        url:"upload",
+        text:"Upload"
+    },
+    {
+        url:"breadcrumb",
+        text:"Breadcrumb"
+    },
+    {
+        url:"rate",
+        text:"Rate"
+    },
+    {
+        url:"transfer",
+        text:"Transfer"
+    },
+    {
+        url:"transferTag",
+        text:"TransferTag"
     },
     {
         url:"photoView",
         text:"PhotoView"
     },
-   
 ];
 const echartsMenu = [
-    {
-        url:"pieChart",
-        text:"饼状图"
-    },
     {
         url:"barChart",
         text:"柱状图"
     },
     {
         url:"lineChart",
-        text:"条形图"
+        text:"折线图"
+    },
+    {
+        url:"pieChart",
+        text:"饼状图"
     },
     {
         url:"ringChart",
@@ -73,7 +123,7 @@ const echartsMenu = [
 export default class AsideMenu extends React.Component{
     render(){
         const {match} = this.props;
-        return   <Sider width={200} style={{ background: '#fff' }}>
+        return   <Sider style={{ background:"#fff", overflow: 'hidden auto'}}>
                     <Menu
                         mode="inline"
                         defaultSelectedKeys={['0']}
@@ -90,7 +140,7 @@ export default class AsideMenu extends React.Component{
                                 })
                             }
                         </SubMenu> 
-                        <SubMenu key="图表" title={<span><PieChartOutlined />图表</span>}>
+                        <SubMenu key="图表" title={<span><PieChartOutlined />AntV图表</span>}>
                             {
                                 echartsMenu.map((item, index)=>{
                                     return <Menu.Item key={item.text} ><Link to={`${match.url}/${item.url}`}>{item.text}</Link></Menu.Item>

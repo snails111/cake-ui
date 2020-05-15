@@ -1,0 +1,12 @@
+// 引入官方提供的 less 样式主题文件
+@import '~antd/lib/style/themes/default.less';
+
+.hide-transfer-checkbox {
+    // 隐藏antd自带的checkbox框
+    .ant-checkbox-wrapper {
+        display: none;
+    }
+    .ant-checkbox-wrapper-checked + span {
+        color: @primary-color
+    }
+}

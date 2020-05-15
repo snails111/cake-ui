@@ -58,6 +58,7 @@ module.exports = {
     contentBase: [sourceDirectory, styleDirectory],
     watchContentBase: true,
     open: true,
+    host:"192.168.0.61",//让局域网内的其他用户访问自己的设备,默认localhost
     port: 8001,
   },
   module: {
@@ -75,7 +76,21 @@ module.exports = {
         test: /\.less$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'less-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'less-loader',
+              // options: {
+              //   lessOptions: {
+              //     modifyVars: {
+              //       'border-radius-base': '4px',
+              //     }
+              //   }
+              // }
+            }
+          ],
         }),
       },
       {
@@ -84,6 +99,14 @@ module.exports = {
           fallback: 'style-loader',
           use: ['css-loader'],
         }),
+      },
+      {
+        test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: 'url-loader',
+        query: {
+          limit: 10000,//小于10K的转为base64,大于10K的还是原图片
+          name: 'static/img/[name].[hash:8].[ext]',
+        },
       },
       {
         test: /\.html$/,

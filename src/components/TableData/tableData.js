@@ -1,10 +1,9 @@
 import React from "react";
 import { Table } from "antd";
 import PropTypes from "prop-types";
+const TABLE_SCROLL = null;
 // 分页条数
 const PAGE_SIZE_OPTIONS = ["10", "20", "30"];
-// Table滚动高度(10条数据高度)
-const TABLE_SCROLL_Y = 616;
 /*
  * Table 组件
  * author：王洪瑞
@@ -13,6 +12,7 @@ const TABLE_SCROLL_Y = 616;
 export default class TableData extends React.Component {
     static propTypes = {
         bordered: PropTypes.bool,
+        borderedOut: PropTypes.bool,
         columns : PropTypes.array,
         loading: PropTypes.bool,
         intervalColor: PropTypes.bool,
@@ -31,6 +31,7 @@ export default class TableData extends React.Component {
     };
     static defaultProps = {
         bordered: false,
+        borderedOut: false,
         columns: [],
         loading: false,
         intervalColor: false,
@@ -150,7 +151,8 @@ export default class TableData extends React.Component {
     };
     render() {
         const {
-            bordered = false,
+            bordered = false, 
+            borderedOut = false, 
             columns = [],
             rowSelection = null,
             size = "default",
@@ -167,8 +169,14 @@ export default class TableData extends React.Component {
         } = this.props;
         const {loading=false,pageInfo=false,dataList=[],hasPage=false} = this.state
 
+        columns.map(item=>{
+            if(item.title==="操作"){
+                item.className=`operation-column ${item.className||''}`
+            }
+        })
+
         return (
-            <div className="ant-table-wrap">
+            <div className={`ant-table-wrap ${borderedOut?"antd-bordered-out":""}`}>
                 <Table
                     {...this.props}
                     key={this.state.loading}
@@ -189,11 +197,13 @@ export default class TableData extends React.Component {
                     }
                     rowClassName={(record, index)=>{
                         let className = " ";
-                        if(index%2===1&&intervalColor){
-                            className =  'tr-row-bg '
+                        //若是偶数行且需变色
+                        if(intervalColor&&index%2===1){ 
+                            className =  'tr-interval-color '
                         }else{
                             className =  ''
                         }
+
                         if(rowClassName&& rowClassName(record,index)){
                             className +=  rowClassName(record,index)
                         }
@@ -206,7 +216,7 @@ export default class TableData extends React.Component {
                         return index
                     }}
                     rowSelection={rowSelection}
-                    scroll={scroll?{y: TABLE_SCROLL_Y,...scroll}:{y: TABLE_SCROLL_Y}}
+                    scroll={scroll?{y: scroll}:TABLE_SCROLL}
                     size={size}
                     title={title}
                 />

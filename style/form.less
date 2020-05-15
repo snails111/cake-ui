@@ -1,0 +1,88 @@
+.ant-form{
+
+  /* 表单内容样式 */
+  .form-item-box{
+    padding: 0 20px;
+    max-height: calc(~ '85vh - 120px');
+    min-height: 150px;
+    overflow: auto;//超出滚动
+
+    /*去掉右侧状态反馈图标*/
+    .ant-form-item-children-icon{
+      display: none;
+    }
+    /*反馈后 antd设置 padding-right:29.2px; */
+    .ant-form-item-has-feedback .ant-picker{
+      padding-right: 11px;
+    }
+    /*反馈后 antd设置 right:28px; */
+    .ant-form-item-has-feedback > .ant-select .ant-select-arrow, .ant-form-item-has-feedback > .ant-select .ant-select-selection__clear, .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-arrow, .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-selection__clear{
+      right: 11px;
+    }
+    /* 数字框 覆盖antd默认 width:90 */
+    .ant-input-number{
+      width: 100%;
+    }
+    /* 时间选择框 覆盖antd默认 display:inline-flex*/
+    .ant-picker{
+      display: flex;
+    }
+ 
+  }
+
+  // 双列布局
+  .double-layout{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    justify-content: space-between;
+    >div.ant-form-item.text,>div.ant-form-item.number,
+    >div.ant-form-item.password,>div.ant-form-item.verify,
+    >div.ant-form-item.file,>div.ant-form-item.radio,
+    >div.ant-form-item.checkbox,>div.ant-form-item.select,
+    >div.ant-form-item.date,>div.ant-form-item.week,
+    >div.ant-form-item.month,>div.ant-form-item.datetime{
+      width: 49%;
+    }
+    >div.ant-form-item{
+      width: 100%;
+      display: flex;
+      >.ant-form-item-label{
+        min-width: 100px;
+      }
+      >.ant-form-item-control-wrapper{
+        width: 100px;
+        flex: 1;
+      }
+    }
+  }
+
+  /*表单按钮样式*/
+  .action-button-container{
+    width: 100%;
+    position: relative;
+    border-top: 1px solid rgba(34, 46, 58, 0.1);
+    text-align: center;
+    background: #fff;
+    padding: 16px 0;
+    z-index: 3;
+  }
+
+}
+
+
+/*modal弹窗样式*/
+.drag_modal_wrap,
+.ant-modal.pop-form-modal{
+  padding-bottom: 0;
+  .ant-modal-header .ant-modal-title{
+    text-align: center;
+  }
+  .pop-form-custom-text{
+    padding: 15px 20px 0;
+  }
+  .ant-modal-body{
+    padding: 0;
+  }
+}
+

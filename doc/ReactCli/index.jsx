@@ -3,7 +3,7 @@ import {Route} from "react-router-dom";
 import { Layout } from 'antd';
 import Loadable from "react-loadable";
 import AsideMenu from "./Aside/asideMenu"  
-import MyLoadingComponent from "~/doc/components/loadComponents";
+import MyLoadingComponent from "../components/loadComponents";
 
 const {  Content } = Layout;
 
@@ -49,7 +49,7 @@ export default class Contanier extends React.Component{
         )
         return <Layout>
                     <AsideMenu {...this.props}/>
-                    <Layout style={{ padding: '0 24px 24px' }}>
+                    <Layout style={{ margin: '24px' }}>
                         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280, }}>
                             {routes.map((route) => (
                                     <RouteWithSubRoutes key={route.path} {...route} />

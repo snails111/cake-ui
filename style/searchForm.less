@@ -1,0 +1,34 @@
+
+/**** SearchForm 组件样式 *****/
+.ant-advanced-search-form{
+  background: #fff;
+  margin: 10px 0;
+  /* 容器 */
+  .main{ 
+    width: 100%;
+  }
+  /* 数字框 覆盖antd默认 width:90 */
+  .ant-input-number{
+    width: 100%;
+  }
+  /* 时间选择框 覆盖antd默认 display:inline-flex*/
+  .ant-picker{
+    display: flex;
+  }
+  /* 表单项 向下距离 */
+  .form-item-container{
+    margin-bottom: 10px;
+  }
+  /* 表单项标签 距离右侧 */
+  .ant-form-item-label{
+    margin-right: 12px;
+  }
+  /* 表单项标签 是否显示 : */
+  .ant-form-item-label > label::after{
+    display: none;
+  }
+  /* 搜索表单操作按钮 */
+  .btn-container{
+    display: flex;
+  }
+}

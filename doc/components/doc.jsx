@@ -1,48 +1,35 @@
 import React from "react";
 import { Table } from "antd";
 
-const col = [
+const columns=[
   {
-    title: "Name",
-    dataIndex: "name",
-    render: text => <a href="javascript:;">{text}</a>
+    width:"15%",
+    title: "参数",
+    dataIndex: "param",
   },
   {
-    title: "Cash Assets",
-    className: "column-money",
-    dataIndex: "money"
+    width:"50%",
+    title: "说明",
+    dataIndex: "explain"
   },
   {
-    title: "Address",
-    dataIndex: "address"
+    width:"15%",
+    title: "类型",
+    dataIndex: "type"
+  },
+  {
+    title: "默认值",
+    dataIndex: "defaultValue"
   }
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    money: "￥300,000.00",
-    address: "New York No. 1 Lake Park"
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    money: "￥1,256,000.00",
-    address: "London No. 1 Lake Park"
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    money: "￥120,000.00",
-    address: "Sidney No. 1 Lake Park"
-  }
-];
+]
 
 export default (props)=>{
-      return <Table
-                columns={props.col}
-                dataSource={props.data}
-                pagination = {false}
-                />
+  return (
+    <Table
+      size="small"
+      columns={columns}
+      dataSource={props.dataList}
+      pagination = {false}
+    />
+  )
 }
