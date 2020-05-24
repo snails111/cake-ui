@@ -37,7 +37,7 @@ export default class MyForm extends React.Component {
     };
     static defaultProps = {
         formLayout: "horizontal", // horizontal、vertical、inline、double
-        formItemLayout: {labelCol: {span: 3}, wrapperCol: {span: 20}},
+        formItemLayout: {labelCol: {span: 3}, wrapperCol: {span: 21}},
         hideRequiredMark: false,//隐藏所有表单项的必选标记
         initialValues:{},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
         
@@ -124,6 +124,7 @@ export default class MyForm extends React.Component {
             case "text":
                 return (
                     <Input
+                        {...item} //由于input有很多衍生属性：例如 addonAfter
                         disabled={item.disabled}
                         onChange={e => {
                             item.onChange&&item.onChange(e, this.formRef);
@@ -272,6 +273,7 @@ export default class MyForm extends React.Component {
                         placeholder={item.placeholder}
                         showTime={item.showTime ? item.showTime : false} // item.showTime:{defaultValue: moment('00:00:00', 'HH:mm:ss'),format: 'HH:mm:ss'}
                         picker={item.picker||'date'} // picker:'date' 'week' 'month' 'quarter' 'year'
+                        mode={item.mode||'date'} // mode:'time' 'date' 'month' 'year' 'decade'
                         style={item.itemInputStyle}
                     />
                 );
@@ -288,6 +290,7 @@ export default class MyForm extends React.Component {
                         format={item.format || "YYYY-MM-DD"}
                         showTime={item.showTime || false} // showTime={{defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')], format: 'HH:mm:ss'}}
                         picker={item.picker||'date'} // picker:'date' 'week' 'month' 'year'
+                        mode={item.mode||['date','date']} // mode:'time' 'date' 'month' 'year' 'decade'
                         style={{width: "100%", ...item.itemInputStyle}}
                     />
                 );
@@ -309,7 +312,7 @@ export default class MyForm extends React.Component {
     render() {
         const {
             formLayout = "horizontal", // horizontal、vertical、inline、double
-            formItemLayout = {labelCol: {span: 3}, wrapperCol: {span: 20}},
+            formItemLayout = {labelCol: {span: 3}, wrapperCol: {span: 21}},
             hideRequiredMark = false,//隐藏所有表单项的必选标记
             initialValues={},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
             
@@ -336,7 +339,7 @@ export default class MyForm extends React.Component {
                 commonFormItemLayout = {}
                 break;
             default:
-                commonFormItemLayout = formItemLayout
+                commonFormItemLayout = {...formItemLayout}
         }
 
         return (

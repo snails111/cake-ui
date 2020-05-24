@@ -14,11 +14,11 @@ const propsConfig = [
         defaultValue: "line"
     },
     {
-        key: "2",
-        param: "option",
-        explain: "所有参数,详见下方文档",
-        type: "Object",
-        defaultValue: "{}"
+        key: "changeData",
+        param: "changeData",
+        explain: "更新图表数据",
+        type: "function",
+        defaultValue: "this.lineIns.changeData(newData)"
     }
 ];
 

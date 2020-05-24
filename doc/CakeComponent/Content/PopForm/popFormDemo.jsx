@@ -24,6 +24,20 @@ const propsConfig = [
     type: "boolean",
     defaultValue: "false",
   },
+  {
+    key: "children",
+    param: "children",
+    explain: "弹出框内容顶部子元素",
+    type: "reactNode",
+    defaultValue: "",
+  },
+  {
+    key: "className",
+    param: "className",
+    explain: "弹出框类名",
+    type: "string",
+    defaultValue: "''",
+  },
 ];
 // initData配置
 const initDataConfig=[
@@ -42,11 +56,81 @@ const initDataConfig=[
     defaultValue: "",
   },
   {
+    key: "closable",
+    param: "closable",
+    explain: "是否显示右上角的关闭按钮",
+    type: "boolean",
+    defaultValue: "true",
+  },
+  {
+    key: "maskClosable",
+    param: "maskClosable",
+    explain: "点击蒙层是否允许关闭",
+    type: "boolean",
+    defaultValue: "false",
+  },
+  {
+    key: "destroyOnClose",
+    param: "destroyOnClose",
+    explain: "关闭时销毁 Modal 里的子元素",
+    type: "boolean",
+    defaultValue: "false",
+  },
+  {
+    key: "formLayout",
+    param: "formLayout",
+    explain: "表单排列方式",
+    type: "string",
+    defaultValue: "'horizontal'（默认）、'vertical'、'inline'、'double'",
+  },
+  {
+    key: "formItemLayout",
+    param: "formItemLayout",
+    explain: "label和wrapper的宽度比列",
+    type: "object",
+    defaultValue: "{labelCol: {span: 3}, wrapperCol: {span: 20}}",
+  },
+  {
+    key: "hideRequiredMark",
+    param: "hideRequiredMark",
+    explain: "隐藏所有表单项的必选标记",
+    type: "boolean",
+    defaultValue: "false",
+  },
+  {
+    key: "initialValues",
+    param: "initialValues",
+    explain: "表单初始值，如果与 FormItem 的 initialValue 冲突则以 Form 为准",
+    type: "object",
+    defaultValue: "{}",
+  },
+  {
     key: "itemList",
     param: "itemList",
     explain: "表单配置，详见itemList配置",
     type: "array",
     defaultValue: "[]",
+  },
+  {
+    key: "itemStyle",
+    param: "itemStyle",
+    explain: "表单项统一样式配置",
+    type: "object",
+    defaultValue: "{}",
+  },
+  {
+    key: "okText",
+    param: "okText",
+    explain: "表单提交按钮文字",
+    type: "string",
+    defaultValue: "确定",
+  },
+  {
+    key: "cancelText",
+    param: "cancelText",
+    explain: "表单取消按钮文字",
+    type: "string",
+    defaultValue: "取消",
   },
   {
     key: "onOk",
@@ -183,6 +267,20 @@ const itemListConfig = [
     explain: "该表单项是否禁用",
     type: "boolean",
     defaultValue: "false",
+  },
+  {
+    key: "formItemLayout",
+    param: "formItemLayout",
+    explain: "单个表单项（自定义）label、value布局占比",
+    type: "object",
+    defaultValue: "{}",
+  },
+  {
+    key: "itemStyle",
+    param: "itemStyle",
+    explain: "单个表单项（自定义）样式",
+    type: "object",
+    defaultValue: "{}",
   },
 ];
 // buttonConfig配置
@@ -513,9 +611,8 @@ const initData=${JSON.stringify(this.initData1(), null, 2)}
             <PopForm
               initData={this.initData2()}
               modalVisible={this.state.modalVisible2}
-              ref={ins=>this.popFormIns=ins}
             >
-              <span>完善信息后可用新验证登录</span>
+              <div style={{padding:"10px 24px 0",color:"#1890ff"}}>完善信息后可用新验证登录</div>
             </PopForm>
 
             <CodeStatus>{`
@@ -524,10 +621,10 @@ import { PopForm } from "cake-ui"
 const initData=${JSON.stringify(this.initData2(), null, 2)}
 
 <PopForm
-  initData={initData}
+  initData={this.initData2()}
   modalVisible={this.state.modalVisible2}
 >
-  <span>完善信息后可用新验证登录</span>
+  <div style={{padding:"10px 24px 0",color:"#1890ff"}}>完善信息后可用新验证登录</div>
 </PopForm>
             `}</CodeStatus>
           </div>

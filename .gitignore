@@ -6,4 +6,4 @@ esm/
 coverage/
 .idea/
 .project/
-report
+report.*.*

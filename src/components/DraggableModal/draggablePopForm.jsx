@@ -32,31 +32,28 @@ export default class DraggableFormModal extends React.Component {
        
         // 表单的配置
         initData: PropTypes.shape({
-            title: '',
-            modalWidth: 560, // 弹框宽度
-            closableL: false, // 是否显示右上角的关闭按钮
-            maskClosable: false, // 点击蒙层是否允许关闭
-            destroyOnClose: true, // 关闭时销毁 Modal 里的子元素
+            title: PropTypes.string,
+            modalWidth: PropTypes.number,
+            closable: PropTypes.bool,
+            maskClosable:  PropTypes.bool,
+            destroyOnClose:  PropTypes.bool,
 
-            formLayout: "horizontal", // horizontal、vertical、inline、double
-            formItemLayout: {labelCol: {span: 3}, wrapperCol: {span: 20}},
-            hideRequiredMark: false,//隐藏所有表单项的必选标记
-            initialValues:{},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
+            formLayout: PropTypes.string,
+            formItemLayout: PropTypes.object,
+            hideRequiredMark: PropTypes.bool,
+            initialValues: PropTypes.object,
             
-            buttonConfig:{ // 若为false则该表单没有按钮
-                showCancelBtn:true, //是否显示取消按钮
-                showOkBtn:true, //是否显示确定按钮
-                beforeCustomChildren:()=>null,//确定按钮之前的自定义按钮
-                afterCustomChildren:()=>null,//确定按钮之后的自定义按钮
-                style:{},
-            },
+            buttonConfig: PropTypes.oneOfType([
+                PropTypes.object,
+                PropTypes.bool
+            ]),
     
-            itemList: [],
-            itemStyle: {},
-            okText: "确定",
-            cancelText: "取消",
-            onOk: ()=>{}, // 提交表单执行回调
-            onCancel: ()=>{}, // 取消表单执行回调
+            itemList: PropTypes.array,
+            itemStyle: PropTypes.object,
+            okText: PropTypes.string,
+            cancelText: PropTypes.string,
+            onOk: PropTypes.func,
+            onCancel: PropTypes.func,
         }),
         children: PropTypes.node,
         className: PropTypes.string,
@@ -70,7 +67,7 @@ export default class DraggableFormModal extends React.Component {
         initData:{
             title: '',
             modalWidth: 560, // 弹框宽度
-            closableL: false, // 是否显示右上角的关闭按钮
+            closable: true, // 是否显示右上角的关闭按钮
             maskClosable: false, // 点击蒙层是否允许关闭
             destroyOnClose: true, // 关闭时销毁 Modal 里的子元素
 
@@ -214,12 +211,12 @@ export default class DraggableFormModal extends React.Component {
         const {         
             title= '',
             modalWidth= 560, // 弹框宽度
-            closable= false, // 是否显示右上角的关闭按钮
+            closable= true, // 是否显示右上角的关闭按钮
             maskClosable= false, // 点击蒙层是否允许关闭
             destroyOnClose= true, // 关闭时销毁 Modal 里的子元素
 
             formLayout = "horizontal", // horizontal、vertical、inline、double
-            formItemLayout = {labelCol: {span: 4}, wrapperCol: {span: 19}},
+            formItemLayout = {labelCol: {span: 3}, wrapperCol: {span: 21}},
             hideRequiredMark = false,//隐藏所有表单项的必选标记
             initialValues={},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
             
@@ -272,6 +269,10 @@ export default class DraggableFormModal extends React.Component {
 
                     <MyForm
                         {...this.props.initData}
+                        buttonConfig={{
+                            className:"action-button-container pop-action-button-container",
+                            ...buttonConfig,
+                        }}
                         ref={(form) => (this.myform = form)}
                     />
             </Modal>

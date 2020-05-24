@@ -14,6 +14,12 @@ class PopForm extends Component {
     static propTypes = {
         modalVisible: PropTypes.bool,
         initData: PropTypes.shape({
+            title: PropTypes.string,
+            modalWidth: PropTypes.number,
+            closable: PropTypes.bool,
+            maskClosable:  PropTypes.bool,
+            destroyOnClose:  PropTypes.bool,
+
             formLayout: PropTypes.string,
             formItemLayout: PropTypes.object,
             hideRequiredMark: PropTypes.bool,
@@ -40,12 +46,12 @@ class PopForm extends Component {
         initData:{
             title: '',
             modalWidth: 560, // 弹框宽度
-            closableL: false, // 是否显示右上角的关闭按钮
+            closable: true, // 是否显示右上角的关闭按钮
             maskClosable: false, // 点击蒙层是否允许关闭
             destroyOnClose: true, // 关闭时销毁 Modal 里的子元素
 
             formLayout: "horizontal", // horizontal、vertical、inline、double
-            formItemLayout: {labelCol: {span: 3}, wrapperCol: {span: 20}},
+            formItemLayout: {labelCol: {span: 3}, wrapperCol: {span: 21}},
             hideRequiredMark: false,//隐藏所有表单项的必选标记
             initialValues:{},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
             
@@ -91,12 +97,12 @@ class PopForm extends Component {
         const {
             title= '',
             modalWidth= 560, // 弹框宽度
-            closable= false, // 是否显示右上角的关闭按钮
+            closable= true, // 是否显示右上角的关闭按钮
             maskClosable= false, // 点击蒙层是否允许关闭
             destroyOnClose= true, // 关闭时销毁 Modal 里的子元素
 
             formLayout = "horizontal", // horizontal、vertical、inline、double
-            formItemLayout = {labelCol: {span: 4}, wrapperCol: {span: 19}},
+            formItemLayout = {labelCol: {span: 3}, wrapperCol: {span: 21}},
             hideRequiredMark = false,//隐藏所有表单项的必选标记
             initialValues={},//如果与 FormItem 的 initialValue 冲突则以 Form 为准
             
@@ -120,7 +126,7 @@ class PopForm extends Component {
         return (
             <div className="modal-pupModal">
                 <Modal
-                    {...this.props}
+                    {...this.props} 
                     title={title}
                     visible={this.state.modalVisible}
                     className={`pop-form-modal ${this.props.className}`}
@@ -139,6 +145,10 @@ class PopForm extends Component {
                     </div>
                     <MyForm
                         {...this.props.initData}
+                        buttonConfig={{
+                            className:"action-button-container pop-action-button-container",
+                            ...buttonConfig,
+                        }}
                         ref={(form) => (this.myform = form)}
                     />
                 </Modal>

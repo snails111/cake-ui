@@ -2,10 +2,11 @@
 
   /* 表单内容样式 */
   .form-item-box{
-    padding: 0 20px;
-    max-height: calc(~ '85vh - 120px');
     min-height: 150px;
+    max-height: calc(~ '85vh - 120px');
     overflow: auto;//超出滚动
+    padding: 0 24px;//与弹框header的padding保持一致
+    margin-top: 20px;
 
     /*去掉右侧状态反馈图标*/
     .ant-form-item-children-icon{
@@ -59,30 +60,40 @@
 
   /*表单按钮样式*/
   .action-button-container{
+    display: flex;
     width: 100%;
     position: relative;
-    border-top: 1px solid rgba(34, 46, 58, 0.1);
-    text-align: center;
     background: #fff;
+    justify-content: center;
+    border-top: 1px solid rgba(34, 46, 58, 0.1);
+    box-shadow:0px -1px 3px 0px rgba(241,241,241,1);
     padding: 16px 0;
     z-index: 3;
   }
-
 }
 
 
-/*modal弹窗样式*/
+/*拖拽、表单弹框样式*/
 .drag_modal_wrap,
-.ant-modal.pop-form-modal{
-  padding-bottom: 0;
+.pop-form-modal{
+  /* 标题左对齐 */
   .ant-modal-header .ant-modal-title{
-    text-align: center;
+    text-align: left;/* 原center */
   }
-  .pop-form-custom-text{
-    padding: 15px 20px 0;
-  }
+  /* 内容距离为0 */
   .ant-modal-body{
-    padding: 0;
+    padding:0;/* 原24px */
+  }
+
+  /* 表单内容样式 */
+  .form-item-box{
+    padding: 0 24px;//与弹框header的padding保持一致
+  }
+  /* 表单弹框按钮样式 */
+  .pop-action-button-container{
+    justify-content: flex-end;/* 原center */
+    border-top: none;
+    padding: 10px 24px;//与弹框header的padding保持一致
   }
 }
 

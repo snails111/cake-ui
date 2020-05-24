@@ -12,9 +12,9 @@ const propsConfig = [
   {
     key: "formLayout",
     param: "formLayout",
-    explain: "表单的排列方式: horizontal、vertical、inline、double",
+    explain: "表单排列方式",
     type: "string",
-    defaultValue: "horizontal",
+    defaultValue: "'horizontal'（默认）、'vertical'、'inline'、'double'",
   },
   {
     key: "formItemLayout",
@@ -31,11 +31,11 @@ const propsConfig = [
     defaultValue: "false",
   },
   {
-    key: "buttonConfig",
-    param: "buttonConfig",
-    explain: "表单button按钮配置",
+    key: "initialValues",
+    param: "initialValues",
+    explain: "表单初始值，如果与 FormItem 的 initialValue 冲突则以 Form 为准",
     type: "object",
-    defaultValue: "若为false则该表单没有按钮，详见下方buttonConfig",
+    defaultValue: "{}",
   },
   {
     key: "itemList",
@@ -63,7 +63,7 @@ const propsConfig = [
     param: "cancelText",
     explain: "表单取消按钮文字",
     type: "string",
-    defaultValue: "确定",
+    defaultValue: "取消",
   },
   {
     key: "onOk",
@@ -78,6 +78,13 @@ const propsConfig = [
     explain: "取消表单执行回调",
     type: "function",
     defaultValue: "()=>{}",
+  },
+  {
+    key: "buttonConfig",
+    param: "buttonConfig",
+    explain: "表单button按钮配置",
+    type: "object",
+    defaultValue: "若为false则该表单没有按钮，详见下方buttonConfig",
   },
 ];
 // itemList配置
@@ -425,6 +432,25 @@ export default class MyFormTest extends Component {
     //       render: () => <TransferTag sourceData={[{value:"1",label:"李四"}]} />,
     //   },
       {
+        name: "买入时段（时刻范围）",
+        type: "custom",
+        keyName: "buyTime",
+        render: (form) => {
+            return (
+                <div style={{display: "flex", flexWrap: "nowrap", alignItems: "center"}}>
+                    <FormItem initialValue="" rules={[{required: true, message: "请选择时间"}]} style={{marginRight: 0}}>
+                        <TimePicker placeholder="（时：分）" format={"HH:mm"}/>
+                    </FormItem>
+                    <span style={{margin: "0 16px 24px"}}> ~ </span>
+                    <FormItem initialValue="" rules={[{required: true, message: "请选择时间"}]}>
+                        <TimePicker placeholder="（时：分）" format={"HH:mm"}/>
+                    </FormItem>
+                </div>
+            )
+        },
+        itemStyle:{margin:"0px"},
+      },
+      {
           name: "自定义组合",
           type: "custom",
           keyName: "message",
@@ -456,6 +482,7 @@ export default class MyFormTest extends Component {
               )
           }
       },
+     
     ];
 
     return (
