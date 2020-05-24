@@ -20,7 +20,14 @@ const devConfig = {
   plugins: [
     commonjs({ exclude: 'src/**' }),
     nodeResolve(),
-    babel(),
+    babel({
+      babelrc: false,
+      presets: ['@babel/env', '@babel/react'],
+      plugins: [
+        '@babel/plugin-proposal-class-properties',
+        '@babel/plugin-proposal-export-default-from',
+      ],
+    }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
@@ -43,7 +50,10 @@ const productionConfig = {
     ignore(['prop-types']),
     commonjs({ exclude: 'src/**' }),
     nodeResolve(),
-    babel({ plugins: ['transform-react-remove-prop-types'] }),
+    babel({
+      presets: ['@babel/env'],
+      plugins: ['transform-react-remove-prop-types', '@babel/plugin-proposal-export-default-from'],
+    }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
