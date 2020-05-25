@@ -4,25 +4,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const sourceDirectory = path.resolve(__dirname, '');
-const targetDirectory = path.resolve(__dirname, 'dist');
+const sourceDirectory = path.resolve(__dirname, 'doc');
+const targetDirectory = path.resolve(__dirname, 'doc/dist');
 const styleDirectory = path.resolve(__dirname, 'style');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
 const plugins = [
-  // new HtmlWebpackPlugin({
-  //   filename: 'index.html',
-  //   inject: true,
-  //   template: path.resolve(__dirname, 'doc/index.html'),
-  //   minify: {
-  //     collapseWhitespace: !isDev,
-  //     removeComments: !isDev,
-  //     removeRedundantAttributes: !isDev,
-  //   },
-  // }),
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    inject: true,
+    template: path.resolve(__dirname, 'doc/index.html'),
+    minify: {
+      collapseWhitespace: !isDev,
+      removeComments: !isDev,
+      removeRedundantAttributes: !isDev,
+    },
+  }),
   new webpack.HotModuleReplacementPlugin(),
-  new ExtractTextPlugin('app.css'),
+  new ExtractTextPlugin('app-[contenthash:8].css'),
   new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
@@ -46,16 +46,12 @@ if (!isDev) {
 module.exports = {
   context: sourceDirectory,
   entry: {
-    app: './src/index.js',
+    app: './app.js',
   },
   output: {
     path: targetDirectory,
-    filename: 'cakeUI.min.js',
+    filename: '[name]-[hash].js',
     hashDigestLength: 8,
-    // export to AMD, CommonJS, or window
-    libraryTarget: 'umd',
-    // the name exported to window
-    library: 'cakeUI'
   },
   devServer: {
     hot: true,
@@ -73,9 +69,6 @@ module.exports = {
         use: [
             {
                 loader: 'babel-loader',
-                options: {
-                  babelrc: true,
-                }
             },
         ],
       },
@@ -112,7 +105,7 @@ module.exports = {
         loader: 'url-loader',
         query: {
           limit: 10000,//小于10K的转为base64,大于10K的还是原图片
-          name: 'static/img/[name].[ext]',
+          name: 'static/img/[name].[hash:8].[ext]',
         },
       },
       {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Viewer from "./viewerjs/viewer.min";
+import Viewer from "./viewerjs/viewer.min.js";
 
 class PhotoView extends Component {
     static propTypes = {

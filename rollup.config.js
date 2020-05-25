@@ -4,6 +4,9 @@ import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import uglify from 'rollup-plugin-uglify';
 import ignore from 'rollup-plugin-ignore';
+// import ReactIs from "react-is"
+import React from "react"
+import ReactDOM from "react-dom"
 
 const devConfig = {
   input: 'src/index.js',
@@ -18,10 +21,19 @@ const devConfig = {
     sourcemap: true,
   },
   plugins: [
-    commonjs({ exclude: 'src/**' }),
     nodeResolve(),
+    commonjs({
+      exclude: 'src/**' ,
+      nameExports:{
+        // 'react-is':Object.keys(ReactIs),
+        'react':Object.keys(React),
+        'react-dom':Object.keys(ReactDOM),
+        'style-components':['styled','css'],
+      }
+    }),
     babel({
       babelrc: false,
+      exclude: 'node_modules/**',
       presets: ['@babel/env', '@babel/react'],
       plugins: [
         '@babel/plugin-proposal-class-properties',
