@@ -23,12 +23,12 @@ const devConfig = {
   plugins: [
     nodeResolve(),
     commonjs({
-      exclude: 'src/**' ,
-      nameExports:{
+      exclude: 'src/**',
+      nameExports: {
         // 'react-is':Object.keys(ReactIs),
-        'react':Object.keys(React),
-        'react-dom':Object.keys(ReactDOM),
-        'style-components':['styled','css'],
+        'react': Object.keys(React),
+        'react-dom': Object.keys(ReactDOM),
+        'style-components': ['styled', 'css'],
       }
     }),
     babel({
