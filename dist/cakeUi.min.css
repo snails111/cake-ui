@@ -104,6 +104,54 @@
   border-radius: 4px;
   /* 原2px */
 }
+/**** descriptions 组件样式 *****/
+.detail-layout .ant-descriptions-row > th,
+.detail-layout .ant-descriptions-row > td {
+  padding-bottom: 10px;
+  /* 原16px */
+}
+.detail-layout .ant-descriptions-item {
+  white-space: nowrap;
+}
+.detail-layout .ant-descriptions-item .ant-descriptions-item-label {
+  width: 88px;
+  color: #7D8AA6;
+  text-align: right;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+.detail-layout .ant-descriptions-item .ant-descriptions-item-content {
+  width: calc( 100%  -  88px );
+  color: #475669;
+  vertical-align: top;
+}
+.detail-layout .descriptions-ellipsis {
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pop-descriptions-modal .ant-modal-body {
+  padding: 0;
+}
+.pop-descriptions-modal .pop-descriptions-content {
+  margin: 10px 20px 0;
+}
+.pop-descriptions-modal .descriptions-action-button-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  border-top: 1px solid rgba(34, 46, 58, 0.1);
+  box-shadow: 0px -1px 3px 0px #f1f1f1;
+  padding: 16px 0;
+  z-index: 3;
+  justify-content: flex-end;
+  /* 原center */
+  border-top: none;
+  padding: 10px 24px;
+}
 /**** searchForm 组件样式 *****/
 /**** SearchForm 组件样式 *****/
 .ant-advanced-search-form {
@@ -168,14 +216,13 @@
 /**** form 组件样式 *****/
 .ant-form {
   /* 表单内容样式 */
-  /*表单按钮样式*/
+  /*表单按钮样式  居中放置*/
 }
 .ant-form .form-item-box {
-  min-height: 150px;
+  min-height: 100px;
   max-height: calc(85vh - 120px);
   overflow: auto;
   padding: 0 24px;
-  margin-top: 20px;
   /*去掉右侧状态反馈图标*/
   /*反馈后 antd设置 padding-right:29.2px; */
   /*反馈后 antd设置 right:28px; */
@@ -206,23 +253,10 @@
   padding: 0 20px;
   justify-content: space-between;
 }
-.ant-form .double-layout > div.ant-form-item.text,
-.ant-form .double-layout > div.ant-form-item.number,
-.ant-form .double-layout > div.ant-form-item.password,
-.ant-form .double-layout > div.ant-form-item.verify,
-.ant-form .double-layout > div.ant-form-item.file,
-.ant-form .double-layout > div.ant-form-item.radio,
-.ant-form .double-layout > div.ant-form-item.checkbox,
-.ant-form .double-layout > div.ant-form-item.select,
-.ant-form .double-layout > div.ant-form-item.date,
-.ant-form .double-layout > div.ant-form-item.week,
-.ant-form .double-layout > div.ant-form-item.month,
-.ant-form .double-layout > div.ant-form-item.datetime {
-  width: 49%;
-}
 .ant-form .double-layout > div.ant-form-item {
-  width: 100%;
+  width: 50%;
   display: flex;
+  flex-wrap: nowrap;
 }
 .ant-form .double-layout > div.ant-form-item > .ant-form-item-label {
   min-width: 100px;
@@ -248,7 +282,7 @@
   /* 标题左对齐 */
   /* 内容距离为0 */
   /* 表单内容样式 */
-  /* 表单弹框按钮样式 */
+  /* 表单弹框按钮样式  右侧放置*/
 }
 .drag_modal_wrap .ant-modal-header .ant-modal-title,
 .pop-form-modal .ant-modal-header .ant-modal-title {
@@ -263,6 +297,7 @@
 .drag_modal_wrap .form-item-box,
 .pop-form-modal .form-item-box {
   padding: 0 24px;
+  margin-top: 24px;
 }
 .drag_modal_wrap .pop-action-button-container,
 .pop-form-modal .pop-action-button-container {
@@ -414,8 +449,4 @@
 .has-error .transfer-box .ant-input-affix-wrapper .ant-input:focus {
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
-/****  穿梭过滤框样式 *****/
-/**** 图片查看器 组件样式 *****/
-/**** wangEditor 组件样式 *****/
-/**** myEcharts 组件样式 *****/
 
