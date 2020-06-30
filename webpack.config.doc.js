@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// webpack4建议用 mini-css-extract-plugin 抽离模块中的css
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const sourceDirectory = path.resolve(__dirname, 'doc');
@@ -22,7 +23,7 @@ const plugins = [
     },
   }),
   new webpack.HotModuleReplacementPlugin(),
-  new ExtractTextPlugin('app-[contenthash:8].css'),
+  new MiniCssExtractPlugin({filename: 'cakeUi.css'}),
   new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
@@ -55,11 +56,11 @@ module.exports = {
   },
   devServer: {
     hot: true,
-    contentBase: [sourceDirectory, styleDirectory],
+    contentBase: [sourceDirectory,styleDirectory],
     watchContentBase: true,
     open: true,
     host:"192.168.0.61",//让局域网内的其他用户访问自己的设备,默认localhost
-    port: 8001,
+    port: 8002,
   },
   module: {
     rules: [
@@ -74,31 +75,19 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'less-loader',
-              // options: {
-              //   lessOptions: {
-              //     modifyVars: {
-              //       'border-radius-base': '4px',
-              //     }
-              //   }
-              // }
-            }
-          ],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "less-loader",
+          },
+        ],
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader'],
-        }),
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -124,5 +113,5 @@ module.exports = {
     },
     extensions: ['.js', '.jsx', '.less'], //后缀名自动补全
   },
-  plugins,
+  plugins
 };

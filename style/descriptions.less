@@ -1,0 +1,53 @@
+.detail-layout{
+  .ant-descriptions-row > th, 
+  .ant-descriptions-row > td{
+    padding-bottom: 10px;/* 原16px */
+  }
+
+  .ant-descriptions-item{
+    white-space: nowrap;
+    .ant-descriptions-item-label { //label保持右对齐
+      width:88px;
+      color:#7D8AA6;
+      text-align: right;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+    .ant-descriptions-item-content{
+      width: calc( ~" 100%  -  88px " );
+      color:#475669;
+      vertical-align: top;
+    }
+  }
+
+  // -------- 单行省略（强制不换行） -----------
+  .descriptions-ellipsis{
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.pop-descriptions-modal{
+  .ant-modal-body{
+    padding: 0;
+  }
+  .pop-descriptions-content{
+    margin:10px 20px 0;
+  }
+  .descriptions-action-button-container{
+    display: flex;
+    width: 100%;
+    position: relative;
+    background: #fff;
+    border-top: 1px solid rgba(34, 46, 58, 0.1);
+    box-shadow:0px -1px 3px 0px rgba(241,241,241,1);
+    padding: 16px 0;
+    z-index: 3;
+    justify-content: flex-end;/* 原center */
+    border-top: none;
+    padding: 10px 24px;//与弹框header的padding保持一致
+  }
+}

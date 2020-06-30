@@ -1,0 +1,421 @@
+/**** button 组件样式 *****/
+/* 
+* 根据UI定制大中小默认按钮 
+* 对 Button的封装只有样式，没有组件封装
+*/
+.ant-btn {
+  border-radius: 4px;
+  /* 原2px */
+}
+.ant-btn-sm {
+  padding: 0px 8px;
+  /* 原0px 7px */
+}
+.ant-btn-circle,
+.ant-btn-circle-outline {
+  border-radius: 50%;
+  /* 避免antd-btn样式覆盖该样式 */
+}
+/* 危险按钮禁用 */
+.ant-btn-dangerous-disabled,
+.ant-btn-dangerous.disabled,
+.ant-btn-dangerous[disabled] {
+  color: #ff4d4f;
+  /* 原color: rgba(0, 0, 0, 0.25); */
+}
+/* 按钮组合单选 */
+.ant-radio-button-wrapper:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.ant-radio-button-wrapper:last-child {
+  border-radius: 0 4px 4px 0;
+}
+/**** badge 组件样式 *****/
+/* 
+* 根据UI定制 Badge
+* 对 Badge的封装只有样式，没有组件封装
+*/
+/* 定位容器 */
+.ant-badge {
+  display: flex;
+  /* 原inline-block */
+}
+/* 气泡大小 */
+.ant-badge-multiple-words {
+  padding: 0 6px;
+  /* 原0 7px */
+}
+/* 数字位置 */
+.ant-badge-count {
+  min-width: 18px;
+  /* 原20px */
+  height: 17px;
+  /* 原20px */
+  line-height: 17px;
+  /* 原20px */
+  right: 5px;
+  /* 原0px */
+}
+/**** switch 组件样式 *****/
+/* 
+* 根据UI定制大中小默认按钮 
+* 对 Switch的封装只有样式，没有组件封装
+*/
+.ant-switch-inner {
+  margin-right: 6px;
+  margin-left: 24px;
+}
+/**** input 组件样式 *****/
+/* 
+* 根据UI定制 Input
+* 对 Input的封装只有样式，没有组件封装
+*/
+.ant-input,
+.ant-input-number {
+  border-radius: 4px;
+  /* 原2px */
+}
+.ant-select .ant-select-selector {
+  border-radius: 4px;
+  /* 原2px */
+}
+/**** upload 组件样式 *****/
+/* 
+* 根据UI定制 upload
+* 对 Upload的封装只有样式，没有组件封装
+*/
+.ant-upload-list-item .anticon-download {
+  display: inline-block;
+  font-size: 10px;
+  position: absolute;
+  top: 6px;
+  right: 20px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+/**** datepicker 组件样式 *****/
+/* 
+* 根据UI定制 datepicker
+* 对 datepicker的封装只有样式，没有组件封装
+*/
+.ant-picker {
+  border-radius: 4px;
+  /* 原2px */
+}
+/**** searchForm 组件样式 *****/
+/**** SearchForm 组件样式 *****/
+.ant-advanced-search-form {
+  background: #fff;
+  margin: 10px 0;
+  /* 容器 */
+  /* 数字框 覆盖antd默认 width:90 */
+  /* 时间选择框 覆盖antd默认 display:inline-flex*/
+  /* 表单项 向下距离 */
+  /* 表单项标签 距离右侧 */
+  /* 表单项标签 是否显示 : */
+  /* 搜索表单操作按钮 */
+}
+.ant-advanced-search-form .main {
+  width: 100%;
+}
+.ant-advanced-search-form .ant-input-number {
+  width: 100%;
+}
+.ant-advanced-search-form .ant-picker {
+  display: flex;
+}
+.ant-advanced-search-form .form-item-container {
+  margin-bottom: 10px;
+}
+.ant-advanced-search-form .ant-form-item-label {
+  margin-right: 12px;
+}
+.ant-advanced-search-form .ant-form-item-label > label::after {
+  display: none;
+}
+.ant-advanced-search-form .btn-container {
+  display: flex;
+}
+/**** tableData 组件样式 *****/
+/* borderedOut属性为true时 */
+.antd-bordered-out .ant-table {
+  border-radius: 4px;
+  border: 1px solid #f0f0f0;
+  border-bottom: none;
+}
+/* 操作列 */
+.ant-table-tbody > tr > td.operation-column a {
+  padding-right: 8px;
+}
+.ant-table-tbody > tr > td.operation-column a + a::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  vertical-align: middle;
+  background: #e8e8e8;
+  margin-right: 8px;
+}
+.ant-table-tbody > tr > td.operation-column a:last-child {
+  padding-right: 0;
+}
+/* 隔行变色 */
+.ant-table .tr-interval-color {
+  background: rgba(0, 0, 0, 0.02);
+}
+/**** form 组件样式 *****/
+.ant-form {
+  /* 表单内容样式 */
+  /*表单按钮样式*/
+}
+.ant-form .form-item-box {
+  min-height: 150px;
+  max-height: calc(85vh - 120px);
+  overflow: auto;
+  padding: 0 24px;
+  margin-top: 20px;
+  /*去掉右侧状态反馈图标*/
+  /*反馈后 antd设置 padding-right:29.2px; */
+  /*反馈后 antd设置 right:28px; */
+  /* 数字框 覆盖antd默认 width:90 */
+  /* 时间选择框 覆盖antd默认 display:inline-flex*/
+}
+.ant-form .form-item-box .ant-form-item-children-icon {
+  display: none;
+}
+.ant-form .form-item-box .ant-form-item-has-feedback .ant-picker {
+  padding-right: 11px;
+}
+.ant-form .form-item-box .ant-form-item-has-feedback > .ant-select .ant-select-arrow,
+.ant-form .form-item-box .ant-form-item-has-feedback > .ant-select .ant-select-selection__clear,
+.ant-form .form-item-box .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-arrow,
+.ant-form .form-item-box .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-selection__clear {
+  right: 11px;
+}
+.ant-form .form-item-box .ant-input-number {
+  width: 100%;
+}
+.ant-form .form-item-box .ant-picker {
+  display: flex;
+}
+.ant-form .double-layout {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.ant-form .double-layout > div.ant-form-item.text,
+.ant-form .double-layout > div.ant-form-item.number,
+.ant-form .double-layout > div.ant-form-item.password,
+.ant-form .double-layout > div.ant-form-item.verify,
+.ant-form .double-layout > div.ant-form-item.file,
+.ant-form .double-layout > div.ant-form-item.radio,
+.ant-form .double-layout > div.ant-form-item.checkbox,
+.ant-form .double-layout > div.ant-form-item.select,
+.ant-form .double-layout > div.ant-form-item.date,
+.ant-form .double-layout > div.ant-form-item.week,
+.ant-form .double-layout > div.ant-form-item.month,
+.ant-form .double-layout > div.ant-form-item.datetime {
+  width: 49%;
+}
+.ant-form .double-layout > div.ant-form-item {
+  width: 100%;
+  display: flex;
+}
+.ant-form .double-layout > div.ant-form-item > .ant-form-item-label {
+  min-width: 100px;
+}
+.ant-form .double-layout > div.ant-form-item > .ant-form-item-control-wrapper {
+  width: 100px;
+  flex: 1;
+}
+.ant-form .action-button-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  justify-content: center;
+  border-top: 1px solid rgba(34, 46, 58, 0.1);
+  box-shadow: 0px -1px 3px 0px #f1f1f1;
+  padding: 16px 0;
+  z-index: 3;
+}
+/*拖拽、表单弹框样式*/
+.drag_modal_wrap,
+.pop-form-modal {
+  /* 标题左对齐 */
+  /* 内容距离为0 */
+  /* 表单内容样式 */
+  /* 表单弹框按钮样式 */
+}
+.drag_modal_wrap .ant-modal-header .ant-modal-title,
+.pop-form-modal .ant-modal-header .ant-modal-title {
+  text-align: left;
+  /* 原center */
+}
+.drag_modal_wrap .ant-modal-body,
+.pop-form-modal .ant-modal-body {
+  padding: 0;
+  /* 原24px */
+}
+.drag_modal_wrap .form-item-box,
+.pop-form-modal .form-item-box {
+  padding: 0 24px;
+}
+.drag_modal_wrap .pop-action-button-container,
+.pop-form-modal .pop-action-button-container {
+  justify-content: flex-end;
+  /* 原center */
+  border-top: none;
+  padding: 10px 24px;
+}
+/****  穿梭过滤框样式 *****/
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.hide-transfer-checkbox .ant-checkbox-wrapper {
+  display: none;
+}
+.hide-transfer-checkbox .ant-checkbox-wrapper-checked + span {
+  color: #1890ff;
+}
+/****  自定义穿梭过滤框样式 *****/
+.transfer-box {
+  display: flex;
+  width: 100%;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  transition: all 0.3s;
+  min-height: 300px;
+}
+.transfer-box > div {
+  padding: 10px 5px;
+}
+.transfer-box > div > .transfer-box-title {
+  display: flex;
+  margin-bottom: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+.transfer-box > div > .transfer-box-title > span {
+  vertical-align: middle;
+  line-height: normal;
+}
+.transfer-box > div > .transfer-box-title > .transfer-box-title-btn {
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 15px;
+  width: 36px;
+  height: 22px;
+  padding: 3px;
+}
+.transfer-box > div > .transfer-box-title > .primary.transfer-box-title-btn {
+  color: #fff;
+  border: 1px solid #1890ff;
+  background-color: #1890ff;
+}
+.transfer-box > div > .transfer-box-title > .transfer-box-title-btn:not(.primary):hover {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+}
+.transfer-box > div > .transfer-box-title > .primary:hover {
+  background-color: rgba(24, 144, 255, 0.8);
+}
+.transfer-box > div > .ant-input-search {
+  margin-top: 10px;
+}
+.transfer-box > div > .ant-input-search .ant-input {
+  padding-right: 0!important;
+}
+.transfer-box > div > .ant-input-search .ant-input-suffix {
+  right: 12px!important;
+}
+.transfer-box > div > .transfer-content {
+  padding: 0 0 10px 0;
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.transfer-box > div > .transfer-content > div {
+  width: 80px;
+  display: inline-block;
+  position: relative;
+  height: 24px;
+  border: 1px solid #DCDCDC;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 23px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 12px;
+  padding: 0 7px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.transfer-box > div > .transfer-content > div > .anticon {
+  float: right;
+  top: 6px;
+  position: absolute;
+  right: 5px;
+}
+.transfer-box > div > .transfer-content > div.transfer-content-target-tag {
+  text-align: left;
+  border: 1px solid rgba(24, 144, 255, 0.3);
+  background-color: rgba(24, 144, 255, 0.1);
+  color: rgba(24, 144, 255, 0.9);
+  padding-right: 20px;
+}
+.transfer-box > div > .transfer-content > div.transfer-content-target-tag > .anticon:hover {
+  color: #FC1312;
+  transition: all 0.3s;
+}
+.transfer-box > div > .transfer-content > div.transfer-content-source-tag {
+  color: #000;
+}
+.transfer-box > div > .transfer-content > div.transfer-content-target-tag:hover {
+  border-color: #1890ff;
+  background-color: rgba(24, 144, 255, 0.2);
+  color: #1890ff;
+}
+.transfer-box > div > .transfer-content > div.transfer-content-source-tag:hover {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+.transfer-box > .transfer-target-box {
+  flex: 1;
+  transition: all 0.3s;
+  border-right: 1px solid #dcdcdc;
+}
+.transfer-box > .transfer-source-box {
+  flex: 1;
+}
+.has-error .transfer-box {
+  border-color: #f5222d;
+}
+.has-error .transfer-box > .transfer-target-box {
+  border-color: #f5222d;
+}
+.has-error .transfer-box .ant-input-affix-wrapper .ant-input {
+  border-color: #d9d9d9;
+}
+.has-error .transfer-box .ant-input-affix-wrapper .ant-input:hover {
+  border-color: #1890ff;
+}
+.has-error .transfer-box .ant-input-affix-wrapper .ant-input:focus {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+/****  穿梭过滤框样式 *****/
+/**** 图片查看器 组件样式 *****/
+/**** wangEditor 组件样式 *****/
+/**** myEcharts 组件样式 *****/
+

@@ -316,7 +316,7 @@ const buttonConfig=[
     {
         key: "style",
         param: "style",
-        explain: "按钮配置样式",
+        explain: "按钮配置样式，可控制按钮居中、右对齐（ justify-content: flex-end;）",
         type: "object",
         defaultValue: "{}",
     },
@@ -413,6 +413,20 @@ export default class PopFormTest extends React.Component {
           placeholder: "请选择",
           onChange: (value, option, form) => {},
         },
+        {
+          name: "图片",
+          type: "file",
+          keyName: "url",
+          placeholder: "请上传图片",
+          defaultValue:  "",//item.url ? item.url : ""
+          rules: [{ required: true, message: "请上传图片", whitespace: true }],
+          handleUploadChange:(info, form)=>{
+              // Api.bannerUploadFile({file: info.file})
+              //     .then((res) => {
+              //         form.setFieldsValue({'url': res.content.url}) ;
+              //     });
+          }
+        },
       ],
       onCancel: () => {
         this.setState({ modalVisible1: false });
@@ -420,7 +434,7 @@ export default class PopFormTest extends React.Component {
       onOk: (values) => {
         console.log(values, "---onOk");
       },
-    };
+    }
   };
 
   initData2 = () => {
@@ -575,6 +589,12 @@ export default class PopFormTest extends React.Component {
   };
 
   render() {
+    var censor = function(key,value){
+			if(typeof(value) == 'function'){
+				return Function.prototype.toString.call(value)
+			}
+			return value;
+		}
 
     return (
       <div>
@@ -594,7 +614,7 @@ export default class PopFormTest extends React.Component {
             <CodeStatus>{`
 import { PopForm } from "cake-ui"
 
-const initData=${JSON.stringify(this.initData1(), null, 2)}
+const initData=${JSON.stringify(this.initData1(), censor, 2)}
 
 <PopForm
   initData={initData}

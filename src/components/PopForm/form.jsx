@@ -46,7 +46,7 @@ export default class MyForm extends React.Component {
             showOkBtn:true, //是否显示确定按钮
             beforeCustomChildren:()=>null,//确定按钮之前的自定义按钮
             afterCustomChildren:()=>null,//确定按钮之后的自定义按钮
-            style:{},
+            style:{},//可控制按钮居中、右对齐（ justify-content: flex-end;）
         },
 
         itemList: [],
@@ -273,7 +273,7 @@ export default class MyForm extends React.Component {
                         placeholder={item.placeholder}
                         showTime={item.showTime ? item.showTime : false} // item.showTime:{defaultValue: moment('00:00:00', 'HH:mm:ss'),format: 'HH:mm:ss'}
                         picker={item.picker||'date'} // picker:'date' 'week' 'month' 'quarter' 'year'
-                        mode={item.mode||'date'} // mode:'time' 'date' 'month' 'year' 'decade'
+                        // mode={item.mode||'date'} // mode:'time' 'date' 'month' 'year' 'decade'
                         style={item.itemInputStyle}
                     />
                 );
@@ -290,7 +290,7 @@ export default class MyForm extends React.Component {
                         format={item.format || "YYYY-MM-DD"}
                         showTime={item.showTime || false} // showTime={{defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')], format: 'HH:mm:ss'}}
                         picker={item.picker||'date'} // picker:'date' 'week' 'month' 'year'
-                        mode={item.mode||['date','date']} // mode:'time' 'date' 'month' 'year' 'decade'
+                        // mode={item.mode||['date','date']} // mode:'time' 'date' 'month' 'year' 'decade'
                         style={{width: "100%", ...item.itemInputStyle}}
                     />
                 );
@@ -321,7 +321,7 @@ export default class MyForm extends React.Component {
                 showOkBtn:true, //是否显示确定按钮
                 beforeCustomChildren:()=>null,//确定按钮之前的自定义按钮
                 afterCustomChildren:()=>null,//确定按钮之后的自定义按钮
-                style:{},
+                style:{}, //可控制按钮居中、右对齐（ justify-content: flex-end;）
             },
 
             itemList = [],

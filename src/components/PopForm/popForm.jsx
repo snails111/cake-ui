@@ -126,7 +126,7 @@ class PopForm extends Component {
         return (
             <div className="modal-pupModal">
                 <Modal
-                    {...this.props} 
+                    {...this.props.initData} 
                     title={title}
                     visible={this.state.modalVisible}
                     className={`pop-form-modal ${this.props.className}`}

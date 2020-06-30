@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CodeStatus from "../../../components/codeStatus.jsx";
 import Doc from "../../../components/doc.jsx";
 import { MyForm, CheckTagGroup, TransferTag, WangEditor } from "cake-ui/src";
-import { Form, Button,InputNumber } from "antd";
+import { Form, Button,InputNumber,TimePicker } from "antd";
 import moment from "moment";
 // 自定义表单组件
 const FormItem = Form.Item;
@@ -235,7 +235,7 @@ const buttonConfig=[
     {
         key: "style",
         param: "style",
-        explain: "按钮配置样式",
+        explain: "按钮配置样式，可控制按钮居中、右对齐（ justify-content: flex-end;）",
         type: "object",
         defaultValue: "{}",
     },

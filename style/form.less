@@ -2,11 +2,10 @@
 
   /* 表单内容样式 */
   .form-item-box{
-    min-height: 150px;
+    min-height: 100px;
     max-height: calc(~ '85vh - 120px');
     overflow: auto;//超出滚动
     padding: 0 24px;//与弹框header的padding保持一致
-    margin-top: 20px;
 
     /*去掉右侧状态反馈图标*/
     .ant-form-item-children-icon{
@@ -20,6 +19,7 @@
     .ant-form-item-has-feedback > .ant-select .ant-select-arrow, .ant-form-item-has-feedback > .ant-select .ant-select-selection__clear, .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-arrow, .ant-form-item-has-feedback :not(.ant-input-group-addon) > .ant-select .ant-select-selection__clear{
       right: 11px;
     }
+
     /* 数字框 覆盖antd默认 width:90 */
     .ant-input-number{
       width: 100%;
@@ -37,17 +37,10 @@
     flex-wrap: wrap;
     padding: 0 20px;
     justify-content: space-between;
-    >div.ant-form-item.text,>div.ant-form-item.number,
-    >div.ant-form-item.password,>div.ant-form-item.verify,
-    >div.ant-form-item.file,>div.ant-form-item.radio,
-    >div.ant-form-item.checkbox,>div.ant-form-item.select,
-    >div.ant-form-item.date,>div.ant-form-item.week,
-    >div.ant-form-item.month,>div.ant-form-item.datetime{
-      width: 49%;
-    }
     >div.ant-form-item{
-      width: 100%;
+      width: 50%;
       display: flex;
+      flex-wrap: nowrap;
       >.ant-form-item-label{
         min-width: 100px;
       }
@@ -58,7 +51,7 @@
     }
   }
 
-  /*表单按钮样式*/
+  /*表单按钮样式  居中放置*/
   .action-button-container{
     display: flex;
     width: 100%;
@@ -88,8 +81,9 @@
   /* 表单内容样式 */
   .form-item-box{
     padding: 0 24px;//与弹框header的padding保持一致
+    margin-top:24px;
   }
-  /* 表单弹框按钮样式 */
+  /* 表单弹框按钮样式  右侧放置*/
   .pop-action-button-container{
     justify-content: flex-end;/* 原center */
     border-top: none;

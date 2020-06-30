@@ -161,6 +161,15 @@ const routes = [
         isExact: true
     },
     {
+        path: "descriptions",
+        component: Loadable({
+            loader: () =>
+                import("./Content/Descriptions/DescriptionsDemo"),
+            loading: MyLoadingComponent
+        }),
+        isExact: true
+    },
+    {
         path: "datePicker",
         component: Loadable({
             loader: () =>
