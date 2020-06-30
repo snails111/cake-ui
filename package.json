@@ -1,6 +1,6 @@
 {
   "name": "cake-ui",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "基于antd 4.0版本二次开发cake-ui组件库",
   "main": "lib/index.js",
   "module": "esm/index.js",
@@ -31,6 +31,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lcwebgroup/cake-ui.git"
+  },
+  "homePage": {
+    "url": "https://lcwebgroup.github.io/cake-ui/doc/dist/index.html#/"
   },
   "author": "crisBai",
   "license": "MIT",
