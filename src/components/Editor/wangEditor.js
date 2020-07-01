@@ -6,6 +6,233 @@
 }(this, (() => { 
 
 /*
+    富文本编辑器  默认配置信息
+*/
+const config = {
+
+    // 默认菜单配置
+    menus: ['head', 'bold', 'fontSize', 'fontName', 'italic', 'underline', 'strikeThrough', 'foreColor', 'backColor', 'link', 'list', 'justify', 'quote', 'emoticon', 'image','upFile', 'undo', 'redo'],
+
+    fontNames: ['宋体', '微软雅黑', 'Arial', 'Tahoma', 'Verdana'],
+
+    colors: ['#000000', '#eeece0', '#1c487f', '#4d80bf', '#c24f4a', '#8baa4a', '#7b5ba1', '#46acc8', '#f9963b', '#ffffff'],
+
+    // // 语言配置
+    // lang: {
+    //     '设置标题': 'title',
+    //     '正文': 'p',
+    //     '链接文字': 'link text',
+    //     '链接': 'link',
+    //     '插入': 'insert',
+    //     '创建': 'init'
+    // },
+
+    // 表情
+    emotions: [{
+        // tab 的标题
+        title: '默认',
+        // type -> 'emoji' / 'image'
+        type: 'image',
+        // content -> 数组
+        content: [{
+            alt: '[坏笑]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
+        }, {
+            alt: '[舔屏]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png'
+        }, {
+            alt: '[污]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/3c/pcmoren_wu_org.png'
+        }]
+    }, {
+        // tab 的标题
+        title: '新浪',
+        // type -> 'emoji' / 'image'
+        type: 'image',
+        // content -> 数组
+        content: [{
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+            alt: '[草泥马]'
+        }, {
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+            alt: '[神马]'
+        }, {
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+            alt: '[浮云]'
+        }]
+    }, {
+        // tab 的标题
+        title: 'emoji',
+        // type -> 'emoji' / 'image'
+        type: 'emoji',
+        // content -> 数组
+        content: '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐'.split(/\s/)
+    }],
+
+    // 编辑区域的 z-index
+    zIndex: 1,
+
+    // 是否开启 debug 模式（debug 模式下错误会 throw error 形式抛出）
+    debug: false,
+
+    // 插入链接时候的格式校验
+    linkCheck: function linkCheck(text, link) {
+        // text 是插入的文字
+        // link 是插入的链接
+        return true; // 返回 true 即表示成功
+        // return '校验失败' // 返回字符串即表示失败的提示信息
+    },
+
+    // 插入网络图片的校验
+    linkImgCheck: function linkImgCheck(src) {
+        // src 即图片的地址
+        return true; // 返回 true 即表示成功
+        // return '校验失败'  // 返回字符串即表示失败的提示信息
+    },
+
+    // 粘贴过滤样式，默认关闭
+    pasteFilterStyle: false,
+
+    // 粘贴内容时，忽略图片。默认关闭
+    pasteIgnoreImg: false,
+
+    // 对粘贴的文字进行自定义处理，返回处理后的结果。编辑器会将处理后的结果粘贴到编辑区域中。
+    // IE 暂时不支持
+    pasteTextHandle: function pasteTextHandle(content) {
+        // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+        return content;
+    },
+
+    // onchange 事件
+    // onchange: function (html) {
+    //     // html 即变化之后的内容
+    //     console.log(html)
+    // },
+
+    // 是否显示添加网络图片的 tab
+    showLinkImg: true,
+
+    // 插入网络图片的回调
+    linkImgCallback: function linkImgCallback(url) {
+        // console.log(url)  // url 即插入图片的地址
+    },
+
+    // 默认上传图片 max size: 5M
+    uploadImgMaxSize: 5 * 1024 * 1024,
+
+    // 配置一次最多上传几个图片
+    uploadImgMaxLength: 10,
+
+    // 上传图片，是否显示 base64 格式
+    uploadImgShowBase64: true,
+
+    // 上传图片，server 地址（如果有值，则 base64 格式的配置则失效）
+    uploadImgServer: '',
+    // 下载图片，server 地址（如果有值，则 base64 格式的配置则失效）
+    downImgServer: '',
+
+    // 自定义配置 filename
+    uploadImgName: '',
+
+    // 上传图片的自定义参数
+    uploadImgParams: {
+        // token: 'abcdef12345'
+    },
+
+    // 上传图片的自定义header
+    uploadImgHeaders: {
+        // 'Accept': 'text/x-json'
+    },
+
+    // 配置 XHR withCredentials 跨域是否携带cookie
+    withCredentials: false,
+
+    // 自定义上传图片超时时间 ms
+    uploadImgTimeout: 10000,
+
+    // 上传图片 hook
+    uploadImgHooks: {
+        before: function before(xhr, editor, files) {
+            // 图片上传之前触发
+
+            // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+            // return {
+            //     prevent: true,
+            //     msg: '放弃上传'
+            // }
+        },
+        success: function success(xhr, editor, result) {
+            // 图片上传并返回结果，图片插入成功之后触发
+        },
+        fail: function fail(xhr, editor, result) {
+            // 图片上传并返回结果，但图片插入错误时触发
+        },
+        error: function error(xhr, editor) {
+            // 图片上传出错时触发
+        },
+        timeout: function timeout(xhr, editor) {
+            // 图片上传超时时触发
+        }
+    },
+
+    // 是否上传七牛云，默认为 false
+    qiniu: false,
+
+
+
+    // 默认上传文件 max size: 5M
+    uploadFileMaxSize: 5 * 1024 * 1024,
+
+    // 配置一次最多上传几个文件
+    uploadFileMaxLength: 10,
+
+    // 上传文件，server 地址（如果有值，则 base64 格式的配置则失效）
+    uploadFileServer: '',
+    // 下载文件，server 地址（如果有值，则 base64 格式的配置则失效）
+    downFileServer: '',
+
+    // 上传文件的自定义参数
+    uploadFileParams: {
+        // token: 'abcdef12345'
+    },
+
+    // 上传文件的自定义header
+    uploadFileHeaders: {
+        // 'Accept': 'text/x-json'
+    },
+
+    // 自定义上传文件超时时间 ms
+    uploadFileTimeout: 10000,
+
+    // 上传文件 hook
+    uploadFileHooks: {
+        before: function before(xhr, editor, files) {
+            // 图片上传之前触发
+
+            // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+            // return {
+            //     prevent: true,
+            //     msg: '放弃上传'
+            // }
+        },
+        success: function success(xhr, editor, result) {
+            // 上传并返回结果，文件插入成功之后触发
+        },
+        fail: function fail(xhr, editor, result) {
+            // 上传并返回结果，但文件插入错误时触发
+        },
+        error: function error(xhr, editor) {
+            // 文件上传出错时触发
+        },
+        timeout: function timeout(xhr, editor) {
+            // 文件上传超时时触发
+        }
+    },
+
+};
+
+
+/*
     poly-fill
 */
 
@@ -55,7 +282,6 @@ const polyfill = function () {
 /*
     DOM 操作 API
 */
-
 // 根据 html 代码片段创建 dom 对象
 function createElemByHTML(html) {
     let div = void 0;
@@ -537,191 +763,8 @@ $.offAll = function () {
 };
 
 /*
-    配置信息
-*/
-
-const config = {
-
-    // 默认菜单配置
-    menus: ['head', 'bold', 'fontSize', 'fontName', 'italic', 'underline', 'strikeThrough', 'foreColor', 'backColor', 'link', 'list', 'justify', 'quote', 'emoticon', 'image','upFile', 'undo', 'redo'],
-
-    fontNames: ['宋体', '微软雅黑', 'Arial', 'Tahoma', 'Verdana'],
-
-    colors: ['#000000', '#eeece0', '#1c487f', '#4d80bf', '#c24f4a', '#8baa4a', '#7b5ba1', '#46acc8', '#f9963b', '#ffffff'],
-
-    // // 语言配置
-    // lang: {
-    //     '设置标题': 'title',
-    //     '正文': 'p',
-    //     '链接文字': 'link text',
-    //     '链接': 'link',
-    //     '插入': 'insert',
-    //     '创建': 'init'
-    // },
-
-    // 表情
-    emotions: [{
-        // tab 的标题
-        title: '默认',
-        // type -> 'emoji' / 'image'
-        type: 'image',
-        // content -> 数组
-        content: [{
-            alt: '[坏笑]',
-            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
-        }, {
-            alt: '[舔屏]',
-            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png'
-        }, {
-            alt: '[污]',
-            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/3c/pcmoren_wu_org.png'
-        }]
-    }, {
-        // tab 的标题
-        title: '新浪',
-        // type -> 'emoji' / 'image'
-        type: 'image',
-        // content -> 数组
-        content: [{
-            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
-            alt: '[草泥马]'
-        }, {
-            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
-            alt: '[神马]'
-        }, {
-            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
-            alt: '[浮云]'
-        }]
-    }, {
-        // tab 的标题
-        title: 'emoji',
-        // type -> 'emoji' / 'image'
-        type: 'emoji',
-        // content -> 数组
-        content: '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐'.split(/\s/)
-    }],
-
-    // 编辑区域的 z-index
-    zIndex: 1,
-
-    // 是否开启 debug 模式（debug 模式下错误会 throw error 形式抛出）
-    debug: false,
-
-    // 插入链接时候的格式校验
-    linkCheck: function linkCheck(text, link) {
-        // text 是插入的文字
-        // link 是插入的链接
-        return true; // 返回 true 即表示成功
-        // return '校验失败' // 返回字符串即表示失败的提示信息
-    },
-
-    // 插入网络图片的校验
-    linkImgCheck: function linkImgCheck(src) {
-        // src 即图片的地址
-        return true; // 返回 true 即表示成功
-        // return '校验失败'  // 返回字符串即表示失败的提示信息
-    },
-
-    // 粘贴过滤样式，默认关闭
-    pasteFilterStyle: false,
-
-    // 粘贴内容时，忽略图片。默认关闭
-    pasteIgnoreImg: false,
-
-    // 对粘贴的文字进行自定义处理，返回处理后的结果。编辑器会将处理后的结果粘贴到编辑区域中。
-    // IE 暂时不支持
-    pasteTextHandle: function pasteTextHandle(content) {
-        // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
-        return content;
-    },
-
-    // onchange 事件
-    // onchange: function (html) {
-    //     // html 即变化之后的内容
-    //     console.log(html)
-    // },
-
-    // 是否显示添加网络图片的 tab
-    showLinkImg: true,
-
-    // 插入网络图片的回调
-    linkImgCallback: function linkImgCallback(url) {
-        // console.log(url)  // url 即插入图片的地址
-    },
-
-    // 默认上传图片 max size: 5M
-    uploadImgMaxSize: 5 * 1024 * 1024,
-
-    // 配置一次最多上传几个图片
-    // uploadImgMaxLength: 5,
-
-    // 上传图片，是否显示 base64 格式
-    uploadImgShowBase64: true,
-
-    // 上传图片，server 地址（如果有值，则 base64 格式的配置则失效）
-    uploadServer: '',
-
-    // 自定义配置 filename
-    uploadFileName: '',
-
-    // 上传图片的自定义参数
-    uploadImgParams: {
-        // token: 'abcdef12345'
-    },
-
-    // 上传图片的自定义header
-    uploadImgHeaders: {
-        // 'Accept': 'text/x-json'
-    },
-
-    // 配置 XHR withCredentials
-    withCredentials: false,
-
-    // 自定义上传图片超时时间 ms
-    uploadImgTimeout: 10000,
-
-    // 上传图片 hook
-    uploadImgHooks: {
-        // customInsert: function (insertLinkImg, result, editor) {
-        //     console.log('customInsert')
-        //     // 图片上传并返回结果，自定义插入图片的事件，而不是编辑器自动插入图片
-        //     const data = result.data1 || []
-        //     data.forEach(link => {
-        //         insertLinkImg(link)
-        //     })
-        // },
-        before: function before(xhr, editor, files) {
-            // 图片上传之前触发
-
-            // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
-            // return {
-            //     prevent: true,
-            //     msg: '放弃上传'
-            // }
-        },
-        success: function success(xhr, editor, result) {
-            // 图片上传并返回结果，图片插入成功之后触发
-        },
-        fail: function fail(xhr, editor, result) {
-            // 图片上传并返回结果，但图片插入错误时触发
-        },
-        error: function error(xhr, editor) {
-            // 图片上传出错时触发
-        },
-        timeout: function timeout(xhr, editor) {
-            // 图片上传超时时触发
-        }
-    },
-
-    // 是否上传七牛云，默认为 false
-    qiniu: false
-
-};
-
-/*
     工具
 */
-
 // 和 UA 相关的属性
 const UA = {
     _ua: navigator.userAgent,
@@ -2740,7 +2783,7 @@ Image.prototype = {
         // tabs 的配置
         const tabsConfig = [{
             title: '上传图片',
-            tpl: `<div class="w-e-up-img-container">\n                    <div id="${  upTriggerId  }" class="w-e-up-btn">\n                        <i class="w-e-icon-image"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="${  upFileId  }" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                </div>`,
+            tpl:config.uploadImgServer? `<div class="w-e-up-img-container">\n                    <div id="${  upTriggerId  }" class="w-e-up-btn">\n                        <i class="w-e-icon-image"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="${  upFileId  }" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                </div>`:'<div>请先配置上传图片服务器地址（uploadImgServer）</div> ',
             events: [{
                 // 触发选择图片
                 selector: `#${  upTriggerId}`,
@@ -2835,9 +2878,9 @@ Image.prototype = {
     }
 };
 
-    /*
-        menu - img
-    */
+/*
+    menu - file
+*/
 // 构造函数
 function UpFile(editor) {
 
@@ -2850,98 +2893,98 @@ function UpFile(editor) {
     // 当前是否 active 状态
     this._active = false;
 }
-    UpFile.prototype = {
-        constructor: UpFile,
+UpFile.prototype = {
+    constructor: UpFile,
 
-        onClick: function onClick() {
-            const editor = this.editor;
-            const config = editor.config;
-            if (config.qiniu) {
-                return;
-            }
-            this._createInsertPanel();
-        },
-        _createInsertPanel: function _createInsertPanel() {
-            const editor = this.editor;
-            const uploadImg = editor.uploadImg;
-            const config = editor.config;
+    onClick: function onClick() {
+        const editor = this.editor;
+        const config = editor.config;
+        if (config.qiniu) {
+            return;
+        }
+        this._createInsertPanel();
+    },
+    _createInsertPanel: function _createInsertPanel() {
+        const editor = this.editor;
+        const uploadFile = editor.uploadFile;
+        const config = editor.config;
 
-            // id
-            const upTriggerId = getRandom('up-trigger');
-            const upFileId = getRandom('up-file');
-            const linkUrlId = getRandom('link-url');
-            const linkBtnId = getRandom('link-btn');
+        // id
+        const upTriggerId = getRandom('up-trigger');
+        const upFileId = getRandom('up-file');
+        const linkUrlId = getRandom('link-url');
+        const linkBtnId = getRandom('link-btn');
 
-            // tabs 的配置
-            const tabsConfig = [{
-                title: '上传文件',
-                tpl:config.uploadServer? `<div class="w-e-up-img-container">\n                    <div id="${  upTriggerId  }" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="${  upFileId  }" type="file" multiple="multiple"/>\n                    </div>\n                </div>`:'<div>请先配置上传文件服务器地址（uploadServer）</div> ',
-                events: [{
-                    // 触发选择图片
-                    selector: `#${  upTriggerId}`,
-                    type: 'click',
-                    fn: function fn() {
-                        const $file = $(`#${  upFileId}`);
-                        const fileElem = $file[0];
-                        if (fileElem) {
-                            fileElem.click();
-                        } else {
-                            // 返回 true 可关闭 panel
-                            return true;
-                        }
-                    }
-                }, {
-                    // 选择图片完毕
-                    selector: `#${  upFileId}`,
-                    type: 'change',
-                    fn: function fn() {
-                        const $file = $(`#${  upFileId}`);
-                        const fileElem = $file[0];
-                        if (!fileElem) {
-                            // 返回 true 可关闭 panel
-                            return true;
-                        }
-
-                        // 获取选中的 file 对象列表
-                        const fileList = fileElem.files;
-                        if (fileList.length) {
-                            uploadImg.uploadFile(fileList);
-                        }
-
+        // tabs 的配置
+        const tabsConfig = [{
+            title: '上传文件',
+            tpl:config.uploadFileServer? `<div class="w-e-up-img-container">\n                    <div id="${  upTriggerId  }" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="${  upFileId  }" type="file" multiple="multiple"/>\n                    </div>\n                </div>`:'<div>请先配置上传文件服务器地址（uploadFileServer）</div> ',
+            events: [{
+                // 触发选择图片
+                selector: `#${  upTriggerId}`,
+                type: 'click',
+                fn: function fn() {
+                    const $file = $(`#${  upFileId}`);
+                    const fileElem = $file[0];
+                    if (fileElem) {
+                        fileElem.click();
+                    } else {
                         // 返回 true 可关闭 panel
                         return true;
                     }
-                }]
-            }]; // tabs end
+                }
+            }, {
+                // 选择图片完毕
+                selector: `#${  upFileId}`,
+                type: 'change',
+                fn: function fn() {
+                    const $file = $(`#${  upFileId}`);
+                    const fileElem = $file[0];
+                    if (!fileElem) {
+                        // 返回 true 可关闭 panel
+                        return true;
+                    }
 
-            // 判断 tabs 的显示
-            const tabsConfigResult = [];
-            tabsConfigResult.push(tabsConfig[0]);
+                    // 获取选中的 file 对象列表
+                    const fileList = fileElem.files;
+                    if (fileList.length) {
+                        uploadFile.uploadFile(fileList);
+                    }
 
-            // 创建 panel 并显示
-            const panel = new Panel(this, {
-                width: 300,
-                tabs: tabsConfigResult
-            });
-            panel.show();
+                    // 返回 true 可关闭 panel
+                    return true;
+                }
+            }]
+        }]; // tabs end
 
-            // 记录属性
-            this.panel = panel;
-        },
+        // 判断 tabs 的显示
+        const tabsConfigResult = [];
+        tabsConfigResult.push(tabsConfig[0]);
 
-        // 试图改变 active 状态
-        tryChangeActive: function tryChangeActive(e) {
-            const editor = this.editor;
-            const $elem = this.$elem;
-            if (editor._selectedImg) {
-                this._active = true;
-                $elem.addClass('w-e-active');
-            } else {
-                this._active = false;
-                $elem.removeClass('w-e-active');
-            }
+        // 创建 panel 并显示
+        const panel = new Panel(this, {
+            width: 300,
+            tabs: tabsConfigResult
+        });
+        panel.show();
+
+        // 记录属性
+        this.panel = panel;
+    },
+
+    // 试图改变 active 状态
+    tryChangeActive: function tryChangeActive(e) {
+        const editor = this.editor;
+        const $elem = this.$elem;
+        if (editor._selectedImg) {
+            this._active = true;
+            $elem.addClass('w-e-active');
+        } else {
+            this._active = false;
+            $elem.removeClass('w-e-active');
         }
-    };
+    }
+};
 
 /*
     所有菜单的汇总
@@ -3150,7 +3193,7 @@ function getPasteHtml(e, filterStyle, ignoreImg) {
     if (!pasteHtml) {
         return;
     }
-    console.log(pasteHtml,"12312")
+    console.log(pasteHtml,"粘贴的html")
     // 过滤word中状态过来的无用字符
     const docSplitHtml = pasteHtml.split('</html>');
 
@@ -3208,7 +3251,6 @@ function getPasteImgs(e) {
 /*
     编辑区域
 */
-
 // 获取一个 elem.childNodes 的 JSON 数据
 function getChildrenJSON($elem) {
     const result = [];
@@ -3755,7 +3797,6 @@ Text.prototype = {
 /*
     命令，封装 document.execCommand
 */
-
 // 构造函数
 function Command(editor) {
     this.editor = editor;
@@ -4114,7 +4155,6 @@ const _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symb
 function UploadImg(editor) {
     this.editor = editor;
 }
-
 // 原型
 UploadImg.prototype = {
     constructor: UploadImg,
@@ -4182,6 +4222,7 @@ UploadImg.prototype = {
 
     // 上传图片
     uploadImg: function uploadImg(files) {
+        console.log("----------上传图片配置", this.editor.config)
         const _this3 = this;
 
         if (!files || !files.length) {
@@ -4191,33 +4232,34 @@ UploadImg.prototype = {
         // ------------------------------ 获取配置信息 ------------------------------
         const editor = this.editor;
         const config = editor.config;
-        let uploadImgServer = config.uploadServer + "/data/saveData?reqCode=10001";
-        let downImgServer = config.uploadServer + "/data/getData?reqCode=10001";
-        const uploadImgShowBase64 = config.uploadImgShowBase64;
+        let uploadImgServer = config.uploadImgServer ;
+        let downImgServer = config.downImgServer ;
+        const uploadImgShowBase64 = config.uploadImgShowBase64 || true; //图片是否显示 base64 格式
 
-        const maxSize = config.uploadImgMaxSize;
+        const maxSize = config.uploadImgMaxSize; //图片最大尺寸
         const maxSizeM = maxSize / 1024 / 1024;
-        const maxLength = config.uploadImgMaxLength || 10000;
-        const uploadFileName = config.uploadFileName || '';
-        const uploadImgParams = config.uploadImgParams || {};
-        const uploadImgParamsWithUrl = config.uploadImgParamsWithUrl;
-        const uploadImgHeaders = config.uploadImgHeaders || {};
-        const hooks = config.uploadImgHooks || {};
-        const timeout = config.uploadImgTimeout || 3000;
-        let withCredentials = config.withCredentials;
+        const maxLength = config.uploadImgMaxLength || 10000; //图片最多上传张数
+        const uploadImgName = config.uploadImgName || ''; //上传文件名
+        const uploadImgParams = config.uploadImgParams || {}; //上传图片参数
+        const uploadImgParamsWithUrl = config.uploadImgParamsWithUrl; //上传图片参数是否需拼接到url（false）
+        const uploadImgHeaders = config.uploadImgHeaders || {}; //上传图片请求头
+        const hooks = config.uploadImgHooks || {}; //上传图片 hook : before  success  fail  error  timeout
+        
+        const timeout = config.uploadImgTimeout || 3000; //上传图片超时
+        let withCredentials = config.withCredentials;  //上传图片是否携带cookie信息
         if (withCredentials == null) {
             withCredentials = false;
         }
-        const customUploadImg = config.customUploadImg;
 
+        const customUploadImg = config.customUploadImg; //自定义上传图片
         if (!customUploadImg) {
-            // 没有 customUploadImg 的情况下，需要如下两个配置才能继续进行图片上传
+            // 没有 自定义上传 的情况下，需要如下两个配置才能继续进行图片上传
             if (!uploadImgServer && !uploadImgShowBase64) {
                 return;
             }
         }
 
-        // ------------------------------ 验证文件信息 ------------------------------
+        // ------------------------------ 验证图片信息 ------------------------------
         const resultFiles = [];
         const errInfo = [];
         arrForEach(files, (file) => {
@@ -4253,7 +4295,7 @@ UploadImg.prototype = {
             return;
         }
 
-        // ------------------------------ 自定义上传 ------------------------------
+        // ------------------------------ 自定义上传图片 ------------------------------
         if (customUploadImg && typeof customUploadImg === 'function') {
             customUploadImg(resultFiles, this.insertLinkImg.bind(this));
 
@@ -4264,11 +4306,11 @@ UploadImg.prototype = {
         // 添加图片数据
         const formdata = new FormData();
         arrForEach(resultFiles, (file) => {
-            const name = uploadFileName || file.name;
-            formdata.append(name, file);
+            const name = uploadImgName || file.name;
+            formdata.append('file', file);
         });
 
-        // ------------------------------ 上传图片 ------------------------------
+        // ------------------------------ 默认xhr处理上传图片到服务器 ------------------------------
         if (uploadImgServer && typeof uploadImgServer === 'string') {
             // 添加参数
             const uploadImgServerArr = uploadImgServer.split('#');
@@ -4297,7 +4339,6 @@ UploadImg.prototype = {
 
             // 定义 xhr
             const xhr = new XMLHttpRequest();
-            console.log(uploadImgServer,"23123")
             xhr.open('POST', uploadImgServer);
 
             // 设置超时
@@ -4328,8 +4369,10 @@ UploadImg.prototype = {
             xhr.onreadystatechange = function () {
                 let result = void 0;
                 if (xhr.readyState === 4) {
+
+                    // 处理失败
                     if (xhr.status < 200 || xhr.status >= 300) {
-                        // hook - error
+                        // 上传图片 hook - error
                         if (hooks.error && typeof hooks.error === 'function') {
                             hooks.error(xhr, editor);
                         }
@@ -4339,24 +4382,20 @@ UploadImg.prototype = {
                         return;
                     }
 
+                    // 处理成功
                     result = xhr.responseText;
-                    if(result&&JSON.parse(result)){
-                        const resultObj = JSON.parse(result);
-                        if(resultObj.state==="SUCCESS"){
-                            if(resultObj.url){
-                                editor.cmd.do('insertHTML', `<img src="${  resultObj.url  }"/>`);
-                            }
-                        }else if(`${resultObj.flag}`==="1"){
-                            if(resultObj.key){
-                                const url = downImgServer+"&key="+resultObj.key+"&fileName="+resultObj.fileName
-                                editor.cmd.do('insertHTML', `<img src="${  url  }"/>`);
-                            }
-                        }
+                     // 上传图片 hook - success
+                    if (hooks.success && typeof hooks.success === 'function') {
+                        hooks.success(xhr, editor, result);
+                         //     if(result.url){
+                        //         editor.cmd.do('insertHTML', `<img src="${  result.url  }"/>`);
+                        //     }
                     }
+                  
                 }
             };
 
-            // hook - before
+            // 上传图片 hook - before
             if (hooks.before && typeof hooks.before === 'function') {
                 const beforeResult = hooks.before(xhr, editor, resultFiles);
                 if (beforeResult && (typeof beforeResult === 'undefined' ? 'undefined' : _typeof(beforeResult)) === 'object') {
@@ -4394,21 +4433,109 @@ UploadImg.prototype = {
                 };
             });
         }
+    }
+   
+};
+
+/*
+    上传文件
+*/
+
+// 构造函数
+function UploadFile(editor) {
+    this.editor = editor;
+}
+// 原型
+UploadFile.prototype = {
+    constructor: UploadFile,
+
+    // 根据 debug 弹出不同的信息
+    _alert: function _alert(alertInfo, debugInfo) {
+        const editor = this.editor;
+        const debug = editor.config.debug;
+        const customAlert = editor.config.customAlert;
+
+        if (debug) {
+            throw new Error(`wangEditor: ${  debugInfo || alertInfo}`);
+        } else if (customAlert && typeof customAlert === 'function') {
+                customAlert(alertInfo);
+            } else {
+                alert(alertInfo);
+            }
     },
-    uploadFile (files) {
-        const _this3 = this;
-        console.log(files);
-        // ------------------------------ 获取配置信息 ------------------------------
+
+    // 根据链接插入图片
+    insertLinkImg: function insertLinkImg(link) {
+        const _this2 = this;
+
+        if (!link) {
+            return;
+        }
         const editor = this.editor;
         const config = editor.config;
-        let uploadImgServer = config.uploadServer + "/data/saveData?reqCode=10001";
-        let downImgServer = config.uploadServer + "/data/getData?reqCode=10001";
-        const uploadImgParams = config.uploadImgParams || {};
-        const uploadImgParamsWithUrl = config.uploadImgParamsWithUrl;
-        const uploadImgHeaders = config.uploadImgHeaders || {};
-        const hooks = config.uploadImgHooks || {};
-        const timeout = config.uploadImgTimeout || 3000;
-        const withCredentials = config.withCredentials;
+
+        // 校验格式
+        const linkImgCheck = config.linkImgCheck;
+        let checkResult = void 0;
+        if (linkImgCheck && typeof linkImgCheck === 'function') {
+            checkResult = linkImgCheck(link);
+            if (typeof checkResult === 'string') {
+                // 校验失败，提示信息
+                alert(checkResult);
+                return;
+            }
+        }
+
+        editor.cmd.do('insertHTML', `<img src="${  link  }" style="max-width:100%;"/>`);
+
+        // 验证图片 url 是否有效，无效的话给出提示
+        let img = document.createElement('img');
+        img.onload = function () {
+            const callback = config.linkImgCallback;
+            if (callback && typeof callback === 'function') {
+                callback(link);
+            }
+
+            img = null;
+        };
+        img.onerror = function () {
+            img = null;
+            // 无法成功下载图片
+            _this2._alert('插入图片错误', `wangEditor: \u63D2\u5165\u56FE\u7247\u51FA\u9519\uFF0C\u56FE\u7247\u94FE\u63A5\u662F "${  link  }"\uFF0C\u4E0B\u8F7D\u8BE5\u94FE\u63A5\u5931\u8D25`);
+            
+        };
+        img.onabort = function () {
+            img = null;
+        };
+        img.src = link;
+    },
+
+    // 上传文件
+    uploadFile:function uploadFile(files) {
+        // console.log("----------上传文件配置", this.editor.config)
+        const _this3 = this;
+        // ------------------------------ 获取配置信息 上传文件------------------------------
+        const editor = this.editor;
+        const config = editor.config;
+        let uploadFileServer = config.uploadFileServer ;
+        let downFileServer = config.downFileServer ;
+
+        const maxSize = config.uploadFileMaxSize; //文件最大尺寸
+        const maxSizeM = maxSize / 1024 / 1024;
+        const uploadFileParams = config.uploadFileParams || {}; //上传文件参数
+        const uploadFileParamsWithUrl = config.uploadFileParamsWithUrl;  //上传文件参数是否需拼接到url（false）
+        const uploadFileHeaders = config.uploadFileHeaders || {};  //上传文件请求头
+        const hooks = config.uploadFileHooks || {};  //上传文件 hook : before  success  fail  error  timeout
+
+        const timeout = config.uploadFileTimeout || 10000; //上传文件超时
+        let withCredentials = config.withCredentials;  //上传文件是否携带cookie信息
+        if (withCredentials == null) {
+            withCredentials = false;
+        }
+
+        const customUploadFile = config.customUploadFile; //自定义上传文件
+
+
         // ------------------------------ 验证文件信息 ------------------------------
         const resultFiles = [];
         const errInfo = [];
@@ -4420,62 +4547,73 @@ UploadImg.prototype = {
             if (!name || !size) {
                 return;
             }
-            if (size > 0) {
-                // 上传图片过大
-                // errInfo.push('\u3010' + name + '\u3011\u5927\u4E8E ' + maxSizeM + 'M');
+            if (maxSize < size) {
+                // 上传文件过大
+                errInfo.push(`\u3010${  name  }\u3011\u5927\u4E8E ${  maxSizeM  }M`);
                 return;
             }
 
             // 验证通过的加入结果列表
             resultFiles.push(file);
         });
+
+        // ------------------------------ 自定义上传文件 ------------------------------
+        if (customUploadFile && typeof customUploadFile === 'function') {
+            customUploadFile(resultFiles, this.insertLinkImg.bind(this));
+
+            // 阻止以下代码执行
+            return;
+        }
+
         // 添加文件数据
         const formdata = new FormData();
         arrForEach(files, (file) => {
             const name = file.name;
             formdata.append(name, file);
+            formdata.append('file', file);
         });
-        console.log(formdata,resultFiles,"123")
-        // ------------------------------ 上传文件 ------------------------------
-        if (uploadImgServer && typeof uploadImgServer === 'string') {
+
+
+        // ------------------------------ 默认xhr处理上传文件到服务器 ------------------------------
+        if (uploadFileServer && typeof uploadFileServer === 'string') {
             // 添加参数
-            const uploadImgServerArr = uploadImgServer.split('#');
-            uploadImgServer = uploadImgServerArr[0];
-            const uploadImgServerHash = uploadImgServerArr[1] || '';
-            objForEach(uploadImgParams, (key, val) => {
+            const uploadFileServerArr = uploadFileServer.split('#');
+            uploadFileServer = uploadFileServerArr[0];
+            const uploadFileServerHash = uploadFileServerArr[1] || '';
+            objForEach(uploadFileParams, (key, val) => {
                 // 因使用者反应，自定义参数不能默认 encode ，由 v3.1.1 版本开始注释掉
                 // val = encodeURIComponent(val)
 
                 // 第一，将参数拼接到 url 中
-                if (uploadImgParamsWithUrl) {
-                    if (uploadImgServer.indexOf('?') > 0) {
-                        uploadImgServer += '&';
+                if (uploadFileParamsWithUrl) {
+                    if (uploadFileServer.indexOf('?') > 0) {
+                        uploadFileServer += '&';
                     } else {
-                        uploadImgServer += '?';
+                        uploadFileServer += '?';
                     }
-                    uploadImgServer = `${uploadImgServer + key  }=${  val}`;
+                    uploadFileServer = `${uploadFileServer + key  }=${  val}`;
                 }
 
                 // 第二，将参数添加到 formdata 中
                 formdata.append(key, val);
             });
-            if (uploadImgServerHash) {
-                uploadImgServer += `#${  uploadImgServerHash}`;
+            if (uploadFileServerHash) {
+                uploadFileServer += `#${  uploadFileServerHash}`;
             }
 
             // 定义 xhr
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', uploadImgServer);
+            xhr.open('POST', uploadFileServer);
 
             // 设置超时
             xhr.timeout = timeout;
             xhr.ontimeout = function () {
-                // hook - timeout
+                // 上传文件hook - timeout
                 if (hooks.timeout && typeof hooks.timeout === 'function') {
                     hooks.timeout(xhr, editor);
                 }
 
-                _this3._alert('上传图片超时');
+                _this3._alert('上传文件超时');
             };
 
             // 返回数据
@@ -4483,35 +4621,29 @@ UploadImg.prototype = {
                 let result = void 0;
                 if (xhr.readyState === 4) {
                     if (xhr.status < 200 || xhr.status >= 300) {
-                        // hook - error
+                        // 上传文件hook - error
                         if (hooks.error && typeof hooks.error === 'function') {
                             hooks.error(xhr, editor);
                         }
 
                         // xhr 返回状态错误
-                        _this3._alert('上传图片发生错误', `\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ${  xhr.status}`);
+                        _this3._alert('上传文件发生错误', `\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ${  xhr.status}`);
                         return;
                     }
 
+                    // 处理成功
                     result = xhr.responseText;
-                    if(result&&JSON.parse(result)){
-                        const resultObj = JSON.parse(result);
-                        if(resultObj.state==="SUCCESS"){
-                            if(resultObj.url){
-                                editor.cmd.do('insertHTML', `<a style="margin: 0 10px" href="${  resultObj.url  }">${  resultObj.url.split("fileName=")[1] }</a>`);
-                            }
-                        }else if(`${resultObj.flag}`==="1"){
-                            if(resultObj.key){
-                                const url = downImgServer+"&key="+resultObj.key+"&fileName="+resultObj.fileName
-                                editor.cmd.do('insertHTML', `<a style="margin: 0 10px" href="${  url  }">${  resultObj.fileName }</a>`);
-                            }
-                        }
-
+                    // 上传文件 hook - success
+                    if (hooks.success && typeof hooks.success === 'function') {
+                        hooks.success(xhr, editor, result);
+                        //     if(result.url){
+                        //         editor.cmd.do('insertHTML', `<a style="margin: 0 10px" href="${  result.url  }">${ result.url }</a>`);
+                        //     }
                     }
                 }
             };
 
-            // hook - before
+            // 上传文件 hook - before
             if (hooks.before && typeof hooks.before === 'function') {
                 const beforeResult = hooks.before(xhr, editor, resultFiles);
                 if (beforeResult && (typeof beforeResult === 'undefined' ? 'undefined' : _typeof(beforeResult)) === 'object') {
@@ -4523,18 +4655,17 @@ UploadImg.prototype = {
                 }
             }
             // 自定义 headers
-            objForEach(uploadImgHeaders, (key, val) => {
+            objForEach(uploadFileHeaders, (key, val) => {
                 xhr.setRequestHeader(key, val);
             });
             // 跨域传 cookie
             xhr.withCredentials = withCredentials;
             // 发送请求
             xhr.send(formdata);
-            // 注意，要 return 。不去操作接下来的 base64 显示方式
-            
         }
     }
 };
+
 
 /*
     编辑器构造函数
@@ -4724,6 +4855,11 @@ Editor.prototype = {
         this.uploadImg = new UploadImg(this);
     },
 
+    // 添加文件上传
+    _initUploadFile: function _initUploadFile() {
+        this.uploadFile = new UploadFile(this);
+    },
+
     // 初始化菜单
     _initMenus: function _initMenus() {
         this.menus = new Menus(this);
@@ -4848,6 +4984,9 @@ Editor.prototype = {
 
         // 添加 图片上传
         this._initUploadImg();
+
+        // 添加 文件上传
+        this._initUploadFile();
 
         // 初始化选区，将光标定位到内容尾部
         this.initSelection(true);

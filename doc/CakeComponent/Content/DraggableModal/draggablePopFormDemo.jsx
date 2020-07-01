@@ -505,7 +505,17 @@ export default class DraggablePopFormTest extends React.Component {
             type: "custom",
             keyName: "editor",
             rules: [{required: true, message: "请填写"}],
-            render: () => <WangEditor />,
+            render: () => <WangEditor 
+                  // uploadImgServer={this.dataUrl + UPLOAD_FILE_DATA}
+                  // uploadImgParams={{login_yes:"01450afeea6c4048846ff8121aa8b764"}}
+                  // uploadImgHooks={{
+                  //     success: (xhr, editor, result)=>{
+                  //         const res=JSON.parse(result)
+                  //         const url = this.dataUrl + DOWNLOAD_FILE_DATA + "/" + res.content;
+                  //         editor.cmd.do('insertHTML', `<img src="${  url  }"/>`);
+                  //     }
+                  // }}
+              />,
         },
         {
           name: "自定义组合",

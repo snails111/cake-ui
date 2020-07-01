@@ -251,7 +251,7 @@ export default class DescriptionsDemo extends Component {
 
               <div style={{display:"flex",justifyContent:"space-between"}}>
 
-                  {/* 单个 */}
+                  {/* 单个详情 */}
                   <div style={{width:"48%"}}>
                     <DetailDescriptions items={basicInfoName} data={detail}/>
 
@@ -267,7 +267,7 @@ const basicInfoName=${JSON.stringify(basicInfoName, null, 2)}
                   </div>
 
 
-                  {/* 范围 */}
+                  {/* 弹框详情 */}
                   <div style={{width:"48%"}}>
                     <Button onClick={() => { this.setState({ modalVisible: true })}} type="primary">详情</Button>
             

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import CodeStatus from "../../../components/codeStatus.jsx";
 import Doc from "../../../components/doc.jsx";
 import { MyForm, CheckTagGroup, TransferTag, WangEditor } from "cake-ui/src";
-import { Form, Button,InputNumber,TimePicker } from "antd";
+import { Form, Button,InputNumber,TimePicker,Upload } from "antd";
+import { PlusOutlined  } from '@ant-design/icons';
 import moment from "moment";
 // 自定义表单组件
 const FormItem = Form.Item;
@@ -244,8 +245,41 @@ const buttonConfig=[
 export default class MyFormTest extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      pictureList:[],//图片列表
+    };
   }
+
+  // 图片验证
+  beforeUpload = file => {
+    const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJPG) {
+        Message.error("请上传格式为jpg/png的图片!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        Message.error("Image must smaller than 2MB!");
+    }
+    return isJPG && isLt2M;
+  };
+  // 图片上传
+  upLoadFile = file => {
+    // uploadFileToData: (url, params) => PostMethod(url, {...params,login_yes:"01450afeea6c4048846ff8121aa8b764"},{mode:"cors"}),//上传文件到data 
+    // Api.uploadFileToData(this.dataUrl + UPLOAD_FILE_DATA, { file }).then(
+    //     res => {
+    //         const {pictureList=[]} = this.state
+    //         const url = this.dataUrl + DOWNLOAD_FILE_DATA + "/" + res.content;
+    //         pictureList.push({uid:pictureList.length+1,url})
+    //         this.setState({pictureList})
+    //     }
+    // );
+  };
+  // 图片删除
+  removeFile = file => {
+      const pics = [...this.state.pictureList]
+      this.setState({pictureList: pics.filter(item=>item.uid!==file.uid)})
+  };
+
   render() {
     const itemList = [
       {
@@ -292,13 +326,6 @@ export default class MyFormTest extends Component {
         type: "textarea",
         keyName: "descp",
         placeholder: "请输入",
-      },
-      {
-        name: "上传文件",
-        type: "file",
-        keyName: "file",
-        placeholder: "请上传",
-        onChange: (e, form) => {},
       },
       {
         name: "单选框",
@@ -412,12 +439,55 @@ export default class MyFormTest extends Component {
         },
       },
       {
+        name: "上传文件",
+        type: "file",
+        keyName: "file",
+        placeholder: "请上传",
+        onChange: (e, form) => {},
+      },
+      {
           name: "自定义编辑器",
           type: "custom",
           keyName: "editor",
           rules: [{required: true, message: "请填写"}],
-          render: () => <WangEditor />,
+          render: () => <WangEditor 
+                  // uploadImgServer={this.dataUrl + UPLOAD_FILE_DATA}
+                  // uploadImgParams={{login_yes:"01450afeea6c4048846ff8121aa8b764"}}
+                  // uploadImgHooks={{
+                  //     success: (xhr, editor, result)=>{
+                  //         const res=JSON.parse(result)
+                  //         const url = this.dataUrl + DOWNLOAD_FILE_DATA + "/" + res.content;
+                  //         editor.cmd.do('insertHTML', `<img src="${  url  }"/>`);
+                  //     }
+                  // }}
+              />,
       },
+      {
+        name: "图片列表",
+        type: "custom",
+        keyName: "breviaryPicture",
+        itemStyle: {marginBottom: 0},
+        render: (form) => {
+            return (
+                <div style={{display: "flex", flexWrap: "nowrap", alignItems: "center"}}>
+                    <Upload
+                        customRequest={() => {}}//阻止默认上传
+                        action={file => this.upLoadFile(file)}//上传文件
+                        onRemove={file => this.removeFile(file)}//删除文件
+                        beforeUpload={file => this.beforeUpload(file)}//文件验证
+                        listType="picture-card"
+                        fileList={this.state.pictureList||[]}
+                        showUploadList={{ 
+                            showPreviewIcon: false,
+                            showRemoveIcon: true,
+                        }}
+                    >
+                        {this.state.pictureList.length >= 3 ? null : <PlusOutlined />}
+                    </Upload>
+                </div>
+            )
+        }
+    },
     //   {
     //       name: "自定义穿梭框",
     //       type: "custom",

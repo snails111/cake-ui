@@ -8,7 +8,7 @@ export { default as DetailDescriptions } from "./components/Descriptions/descrip
 export { default as PopDetailDescriptions } from "./components/Descriptions/popDescriptions.jsx";
 export { default as DraggableModal } from "./components/DraggableModal/draggableModal.jsx";
 export { default as DraggablePopForm } from "./components/DraggableModal/draggablePopForm.jsx";
-export { default as WangEditor } from "./components/Editor/Ueditor.jsx";
+export { default as WangEditor } from "./components/Editor/advanceWangEditor.jsx";
 export { default as CheckTagGroup } from "./components/CheckTagGroup/checkTagGroup.jsx";
 export { default as Transfer } from "./components/Transfer/Transfer.jsx"
 export { default as TransferTag } from "./components/TransferTag/TransferTag.jsx";

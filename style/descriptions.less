@@ -31,9 +31,16 @@
 }
 
 .pop-descriptions-modal{
-  .ant-modal-body{
-    padding: 0;
+   /* 标题左对齐 */
+   .ant-modal-header .ant-modal-title{
+    text-align: left;/* 原center */
+    font-weight: bold;
   }
+  /* 内容距离为0 */
+  .ant-modal-body{
+    padding:0;/* 原24px */
+  }
+  
   .pop-descriptions-content{
     margin:10px 20px 0;
   }
