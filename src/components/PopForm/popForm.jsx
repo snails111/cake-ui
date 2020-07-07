@@ -1,7 +1,7 @@
 import React,{Component} from "react";
 import {Modal} from "antd";
 import PropTypes from "prop-types"; 
-import MyForm from "./form.jsx";
+import MyForm from "./form";
 
 
 /**

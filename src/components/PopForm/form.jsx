@@ -1,7 +1,7 @@
 import React from "react";
 import {Form, Input, InputNumber, Select, Radio, Checkbox, DatePicker, Button} from "antd";
 import { CaretDownOutlined } from '@ant-design/icons';
-import MyUpload from "./upload.jsx";
+import MyUpload from "./upload";
 import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;

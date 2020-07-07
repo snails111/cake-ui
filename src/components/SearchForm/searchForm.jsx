@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { CaretDownOutlined,CaretUpOutlined } from '@ant-design/icons';
 import PropTypes from "prop-types";
-import CheckTagGroup from "../CheckTagGroup/checkTagGroup.jsx";
+import CheckTagGroup from "../CheckTagGroup/checkTagGroup";
 
 const FormItem = Form.Item;
 const {Option} = Select;

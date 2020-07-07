@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 import PropTypes from "prop-types";
-import MyForm from "../PopForm/form.jsx";
+import MyForm from "../PopForm/form";
 
 /*
 * js生成uuid 唯一标志符
