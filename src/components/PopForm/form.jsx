@@ -330,7 +330,7 @@ export default class MyForm extends React.Component {
             cancelText= "取消",
             onOk = ()=>{}, // 提交表单执行回调
             onCancel = ()=>{}, // 取消表单执行回调
-        } = this.props;
+        } = this.props; 
 
         let commonFormItemLayout = {}
         switch(formLayout){ // horizontal、vertical、inline、double
