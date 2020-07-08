@@ -114,11 +114,9 @@
   white-space: nowrap;
 }
 .detail-layout .ant-descriptions-item .ant-descriptions-item-label {
-  width: 88px;
   color: #7D8AA6;
-  text-align: right;
   white-space: nowrap;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 .detail-layout .ant-descriptions-item .ant-descriptions-item-content {
   width: calc( 100%  -  88px );
@@ -166,7 +164,6 @@
 /**** SearchForm 组件样式 *****/
 .ant-advanced-search-form {
   background: #fff;
-  margin: 10px 0;
   /* 容器 */
   /* 数字框 覆盖antd默认 width:90 */
   /* 时间选择框 覆盖antd默认 display:inline-flex*/
@@ -189,9 +186,6 @@
 }
 .ant-advanced-search-form .ant-form-item-label {
   margin-right: 12px;
-}
-.ant-advanced-search-form .ant-form-item-label > label::after {
-  display: none;
 }
 .ant-advanced-search-form .btn-container {
   display: flex;
