@@ -332,15 +332,6 @@ export default class MyForm extends React.Component {
             onCancel = ()=>{}, // 取消表单执行回调
         } = this.props; 
 
-        let commonFormItemLayout = {}
-        switch(formLayout){ // horizontal、vertical、inline、double
-            case "vertical":
-            case "double":
-                commonFormItemLayout = {}
-                break;
-            default:
-                commonFormItemLayout = {...formItemLayout}
-        }
 
         return (
             <Form
@@ -365,7 +356,7 @@ export default class MyForm extends React.Component {
                             return (
                                 <FormItem
                                     {...item}
-                                    {...commonFormItemLayout}
+                                    {...formItemLayout}
                                     {...item.formItemLayout}
                                     key={item.keyName} // label 标签的文本
                                     hasFeedback={item.hasFeedback !== false}

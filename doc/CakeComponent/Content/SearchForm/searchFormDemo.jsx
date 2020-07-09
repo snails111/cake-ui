@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Form } from "antd";
 import { SearchForm } from "cake-ui/src";
 import CodeStatus from "../../../components/codeStatus.jsx";
 import Doc from "../../../components/doc.jsx";
@@ -311,6 +312,32 @@ export default class SearchFormDemo extends React.Component {
         mdColSpan: 10,
         smColSpan: 10,
         xsColSpan: 16,
+      },
+      {
+        name: "饱和度",
+        type: "custom",
+        keyName: "saturate",
+        render:()=>{
+            return (
+                <div style={{display:"flex",alignItems:"center"}}>
+                    <Form.Item
+                        name="saturateMin"
+                        rules={[{ required: true }]}
+                        style={{ display: 'inline-block', width: 'calc(50% - 8px)', marginRight: '8px'  }}
+                    >
+                        <Input placeholder="最小值" />
+                    </Form.Item>
+                    <span>~</span>
+                    <Form.Item
+                        name="saturateMax"
+                        rules={[{ required: true }]}
+                        style={{ display: 'inline-block', width: 'calc(50% - 8px)', marginLeft: '8px' }}
+                    >
+                        <Input placeholder="最大值" />
+                    </Form.Item>
+                </div>
+            )
+        }
       },
     ]
 
