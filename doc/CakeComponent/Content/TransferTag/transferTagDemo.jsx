@@ -3,79 +3,84 @@ import CodeStatus from "../../../components/codeStatus.jsx"
 import Doc from "../../../components/doc.jsx";
 import { TransferTag } from "cake-ui/src";
 
-
-
 //组件属性
 const propsConfig = [
     {
-      key: "1",
+      key: "targetTitle",
       param: "targetTitle",
       explain: "已选中栏的title",
       type: "string",
       defaultValue: "已选中"
     },
     {
-      key: "2",
+      key: "sourceTitle",
       param: "sourceTitle",
       explain: "未选中栏的title",
       type: "string",
       defaultValue: "未选中"
     },
     {
-      key: "3",
-      param: "sourceData",
-      explain: "未选中栏的数据",
-      type: "object",
+      key: "value",
+      param: "value",
+      explain: "已选中栏的数据",
+      type: "array",
       defaultValue: "[]"
     },
     {
-      key: "4",
+      key: "sourceData",
+      param: "sourceData",
+      explain: "未选中栏的数据",
+      type: "array",
+      defaultValue: "[]"
+    },
+    {
+      key: "delPermission",
+      param: "delPermission",
+      explain: "判断是否有删除已选中的数据的权限（delArr：删除数组，cb（isCan）：执行回调函数）",
+      type: "function",
+      defaultValue: "(delArr, cb)=>{ cb(true) }"
+    },
+    {
+      key: "savePermission",
+      param: "savePermission",
+      explain: "判断是否有保存未选中的数据的权限（saveArr：选中数组，cb（isCan）：执行回调函数）",
+      type: "function",
+      defaultValue: "(saveArr, cb)=>{ cb(true) }"
+    },
+    {
+      key: "onChange",
       param: "onChange",
       explain: "点击触发的事件",
       type: "function",
       defaultValue: ""
     },
     {
-      key: "5",
+      key: "targetFilter",
       param: "targetFilter",
       explain: "已选中栏是否出现过滤搜索栏",
       type: "boolean",
       defaultValue: "true"
     },
     {
-      key: "6",
+      key: "sourceFilter",
       param: "sourceFilter",
       explain: "未选中栏是否出现过滤搜索栏",
       type: "boolean",
       defaultValue: "true"
     },
     {
-      key: "7",
-      param: "style",
-      explain: "添加其他的样式",
-      type: "object",
-      defaultValue: ""
-    },
-    {
-      key: "8",
+      key: "className",
       param: "className",
       explain: "添加额外class",
       type: "string",
       defaultValue: ""
     },
     {
-      key: "9",
-      param: "value",
-      explain: "已选中栏的数据",
+      key: "style",
+      param: "style",
+      explain: "添加其他的样式",
       type: "object",
-      defaultValue: "[]"
-    },
-    {
-      key: "9",
-      param: "delPermission",
-      explain: "删除已选中栏中数据",
-      type: "function",
-      defaultValue: "[]"
+      defaultValue: ""
     },
 ];
 
@@ -124,8 +129,10 @@ class TransferTagDemo extends Component {
                </div>
                
                
-               <CodeStatus>{`
+               <CodeStatus>{` 
 import { TransferTag } from "cake-ui"
+
+const sourceData=${JSON.stringify(this.state.sourceData,null,2)}
 
 <TransferTag 
   value={[{value:"1",label:"测试"}]} 

@@ -27,7 +27,9 @@ export default class TransferTag extends React.Component{
         style:PropTypes.object,
         className:PropTypes.string,
         value:PropTypes.array,
-        delPermission:PropTypes.func,
+        onChange:PropTypes.function,
+        delPermission:PropTypes.func,//判断是否有删除已选中的数据的权限（delArr：删除数组，cb（isCan）：执行回调函数）
+        savePermission:PropTypes.func,//判断是否有保存未选中的数据的权限（saveArr：选中数组，cb（isCan）：执行回调函数）
     };
     static defaultProps = {
         targetTitle:"已选中",
@@ -39,7 +41,9 @@ export default class TransferTag extends React.Component{
         style:{},
         className:"",
         value:[],
-        delPermission:undefined
+        onChange:(targetData,sourceData,targetDataFilter,sourceDataFilter)=>{},
+        delPermission:undefined, //判断是否有删除已选中的数据的权限（delArr：删除数组，cb（isCan）：执行回调函数）
+        savePermission:undefined, //判断是否有保存未选中的数据的权限（saveArr：选中数组，cb（isCan）：执行回调函数）
     };
     constructor(props){
         super(props);
@@ -52,9 +56,6 @@ export default class TransferTag extends React.Component{
             sourceSearchValue:""
         }
         this.flag=false;
-    }
-    componentDidMount(){
-        // this.dataChange(this.props.targetData);
     }
     /* 校验两个数组的值是否相等 */
     arrayEquals =  (aArr,bArr) => {
@@ -145,60 +146,47 @@ export default class TransferTag extends React.Component{
             })
         }
     }
-    componentDidUpdate(){
-        // this.dataChange();
-    }
     /* 从未选中到选中 */
     sourceToTag = (obj) => {
-        const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],targetSearchValue="" } = this.state;
-        const sourceArr = sourceData.filter(item=>item.value!==obj.value);// 过滤掉源数组当前选中的项
-        const sourceFilterArr = sourceDataFilter.filter(item=>`${item.value}`!==`${obj.value}`);// 过滤掉页面显示源数组当前选中的项
-        const flag = targetData.some(item=>`${item.value}`===`${obj.value}`); // 判断目标数组中是否有重复的
-        if(!flag){              // 判重
-            targetData.push(obj);
-            if(obj.label.indexOf(targetSearchValue)>-1){ // 根据过滤条件需要是否要显示在页面上
-                targetDataFilter.push(obj)
+        // 选中
+        const chooseFun=()=>{
+            const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],targetSearchValue="" } = this.state;
+            const sourceArr = sourceData.filter(item=>item.value!==obj.value);// 过滤掉源数组当前选中的项
+            const sourceFilterArr = sourceDataFilter.filter(item=>`${item.value}`!==`${obj.value}`);// 过滤掉页面显示源数组当前选中的项
+            const flag = targetData.some(item=>`${item.value}`===`${obj.value}`); // 判断目标数组中是否有重复的
+            if(!flag){    // 判重
+                targetData.push(obj);
+                if(obj.label.indexOf(targetSearchValue)>-1){ // 根据过滤条件需要是否要显示在页面上
+                    targetDataFilter.push(obj)
+                }
             }
+            this.setState({
+                targetData,
+                sourceData:sourceArr,
+                sourceDataFilter:sourceFilterArr,
+                targetDataFilter
+            },()=>{
+                this.dataChange();
+                this.flag = true; // 为了防止页面重复刷新 以致死循环
+            })
         }
-        this.setState({
-            targetData,
-            sourceData:sourceArr,
-            sourceDataFilter:sourceFilterArr,
-            targetDataFilter
-        },()=>{
-            this.dataChange();
-            this.flag = true; // 为了防止页面重复刷新 以致死循环
-        })
-    }
-    /* 从选中到未选中 */  // 如果需要判断是否有权限删除已选中的
-    targetToSource = (obj) => {
-        const {delPermission} = this.props;
-        if(delPermission&&typeof delPermission === "function"){
-            delPermission([obj.value],(isCan)=>{
-                if(isCan){
-                    const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],sourceSearchValue="" } = this.state;
-                    const targetArr = targetData.filter(item=>item.value!==obj.value);// 去掉目标数据中未过滤数组的对象
-                    const targetFilterArr = targetDataFilter.filter(item=>`${item.value}`!==`${obj.value}`);// 去掉目标数据中已过滤数组的对象
-                    const flag = sourceData.some(item=>`${item.value}`===`${obj.value}`); // 判断原数据有没有相同id的数据   判重
 
-                    if(!flag){
-                        sourceData.push(obj);// 判断原数据有没有相同id的数据   判重 不重复  添加
-                        if(obj.label.indexOf(sourceSearchValue)>-1){
-                            sourceDataFilter.push(obj)// 判断原数据有没有相同id的数据   判重 不重复  加上过滤条件添加
-                        }
-                    }
-                    this.setState({
-                        targetData:targetArr,
-                        sourceData,
-                        sourceDataFilter,
-                        targetDataFilter:targetFilterArr
-                    },()=>{
-                        this.dataChange();
-                        this.flag = true;
-                    })
+        const {savePermission} = this.props;
+        // 若有保存权限控制
+        if(savePermission&&typeof savePermission === "function"){
+            savePermission([obj.value],(isCan)=>{
+                if(isCan){
+                    chooseFun()
                 }
             })
         }else{
+            chooseFun()
+        }
+    }
+    /* 从选中到未选中 */  
+    targetToSource = (obj) => {
+        // 删除
+        const delFun=()=>{
             const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],sourceSearchValue="" } = this.state;
             const targetArr = targetData.filter(item=>item.value!==obj.value);// 去掉目标数据中未过滤数组的对象
             const targetFilterArr = targetDataFilter.filter(item=>`${item.value}`!==`${obj.value}`);// 去掉目标数据中已过滤数组的对象
@@ -219,6 +207,18 @@ export default class TransferTag extends React.Component{
                 this.dataChange();
                 this.flag = true;
             })
+        }
+
+        const {delPermission} = this.props;
+        // 若有删除权限控制
+        if(delPermission&&typeof delPermission === "function"){
+            delPermission([obj.value],(isCan)=>{
+                if(isCan){
+                    delFun()
+                }
+            })
+        }else{
+            delFun()
         }
     }
     /* 目标数据过滤 */
@@ -246,30 +246,8 @@ export default class TransferTag extends React.Component{
     /* 清空选中的数据 清空过滤条件下的数据 */
     clearTarget = () => {
         const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],sourceSearchValue="" } = this.state;
-        const {delPermission} = this.props; // 判断是否有删除已选中的数据的权限
-        if(delPermission&&typeof delPermission === "function"){
-            delPermission([...targetDataFilter].map(item=>item.value),(isCan)=> {
-                if (isCan) {
-                    const targetArr = targetData.filter(item => !targetDataFilter.some(subItem => `${subItem.value}` === `${item.value}`));// 清空当前显示在页面的数据，过滤的原始数据清空掉被过滤掉的部分
-                    targetDataFilter.map(item => {
-                        sourceData.push({...item});
-                        if (item.label.indexOf(sourceSearchValue) > -1) {
-                            sourceDataFilter.push({...item})
-                        }
-                        return false
-                    });
-                    this.setState({
-                        sourceData,
-                        sourceDataFilter,
-                        targetData: targetArr,
-                        targetDataFilter: []
-                    }, () => {
-                        this.dataChange();
-                        this.flag = true;
-                    })
-                }
-            })
-        }else{
+        // 删除所有
+        const delAllFun=()=>{
             const targetArr = targetData.filter(item => !targetDataFilter.some(subItem => `${subItem.value}` === `${item.value}`));// 清空当前显示在页面的数据，过滤的原始数据清空掉被过滤掉的部分
             targetDataFilter.map(item => {
                 sourceData.push({...item});
@@ -288,27 +266,54 @@ export default class TransferTag extends React.Component{
                 this.flag = true;
             })
         }
+
+        const {delPermission} = this.props; 
+        // 若有删除权限控制
+        if(delPermission&&typeof delPermission === "function"){
+            delPermission([...targetDataFilter].map(item=>item.value),(isCan)=> {
+                if (isCan) {
+                    delAllFun()
+                }
+            })
+        }else{
+            delAllFun()
+        }
     }
     /* 全选未选中filter之后的source数据 */
     checkAllSourceData = () => {
         const {targetDataFilter=[], sourceDataFilter=[],targetData=[],sourceData=[],targetSearchValue="" } = this.state;
-        const sourceArr = sourceData.filter(item=>!sourceDataFilter.some(subItem=>`${subItem.value}`===`${item.value}`));// 清空当前显示在页面的数据，过滤的原始数据清空掉被过滤掉的部分
-        sourceDataFilter.map(item=>{
-            targetData.push({...item});
-            if(item.label.indexOf(targetSearchValue)>-1){
-                targetDataFilter.push({...item})
-            }
-            return false
-        });
-        this.setState({
-            sourceData:sourceArr,
-            sourceDataFilter:[],
-            targetData,
-            targetDataFilter
-        },()=>{
-            this.dataChange();
-            this.flag = true;
-        })
+        // 选择所有
+        const chooseAllFun=()=>{
+            const sourceArr = sourceData.filter(item=>!sourceDataFilter.some(subItem=>`${subItem.value}`===`${item.value}`));// 清空当前显示在页面的数据，过滤的原始数据清空掉被过滤掉的部分
+            sourceDataFilter.map(item=>{
+                targetData.push({...item});
+                if(item.label.indexOf(targetSearchValue)>-1){
+                    targetDataFilter.push({...item})
+                }
+                return false
+            });
+            this.setState({
+                sourceData:sourceArr,
+                sourceDataFilter:[],
+                targetData,
+                targetDataFilter
+            },()=>{
+                this.dataChange();
+                this.flag = true;
+            })
+        }
+
+        const {savePermission} = this.props;
+        // 若有保存权限控制
+        if(savePermission&&typeof savePermission === "function"){
+            savePermission([obj.value],(isCan)=>{
+                if(isCan){
+                    chooseAllFun()
+                }
+            })
+        }else{
+            chooseAllFun()
+        }
     }
     dataChange= () => {
         const {targetData=[],targetDataFilter=[],sourceData=[],sourceDataFilter=[]} = this.state;
@@ -324,6 +329,7 @@ export default class TransferTag extends React.Component{
             sourceFilter=true,
             style={},
             className="",
+            onChange=(targetData,sourceData,targetDataFilter,sourceDataFilter)=>{}
         } = this.props;
         const { targetSearchValue="",sourceSearchValue=""} = this.state;
         let {targetDataFilter=[], sourceDataFilter=[]} = this.state;
