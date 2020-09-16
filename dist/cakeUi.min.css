@@ -259,9 +259,6 @@
   display: flex;
   flex-wrap: nowrap;
 }
-.ant-form .double-layout > div.ant-form-item > .ant-form-item-label {
-  min-width: 100px;
-}
 .ant-form .double-layout > div.ant-form-item > .ant-form-item-control-wrapper {
   width: 100px;
   flex: 1;
