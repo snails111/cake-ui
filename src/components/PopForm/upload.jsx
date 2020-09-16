@@ -24,7 +24,7 @@ class MyUpload extends React.Component {
 
     render() {
         let {
-            uploadType, // 上传类型：single：单文件 multi:多文件
+            uploadType, // 上传类型:   single:单文件（默认） ;  multi:多文件
             onChange,
             beforeUpload,
             onRemove,
@@ -84,7 +84,7 @@ class MyUpload extends React.Component {
                 style={itemInputStyle}
                 withCredentials
             >
-                <Button style={itemBtnStyle}>{btnText||'上传文件'}</Button>
+                { this.props.children || <Button style={itemBtnStyle}>{btnText||'上传文件'}</Button> }
             </Upload>
         )
     }

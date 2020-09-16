@@ -306,7 +306,7 @@ export default class TransferTag extends React.Component{
         const {savePermission} = this.props;
         // 若有保存权限控制
         if(savePermission&&typeof savePermission === "function"){
-            savePermission([obj.value],(isCan)=>{
+            savePermission([...sourceDataFilter],(isCan)=>{
                 if(isCan){
                     chooseAllFun()
                 }

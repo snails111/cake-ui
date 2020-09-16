@@ -3,8 +3,9 @@ import CodeStatus from "../../../components/codeStatus.jsx";
 import Doc from "../../../components/doc.jsx";
 import { MyForm, CheckTagGroup, TransferTag, WangEditor } from "cake-ui/src";
 import { Form, Button,InputNumber,TimePicker,Upload } from "antd";
-import { PlusOutlined  } from '@ant-design/icons';
+import { PlusOutlined,LoadingOutlined  } from '@ant-design/icons';
 import moment from "moment";
+
 // 自定义表单组件
 const FormItem = Form.Item;
 
@@ -246,7 +247,10 @@ export default class MyFormTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fileList:[],//文件列表
+      fileLoading:false,
       pictureList:[],//图片列表
+      picUrl:"",//单个图片地址
     };
   }
 
@@ -439,13 +443,6 @@ export default class MyFormTest extends Component {
         },
       },
       {
-        name: "上传文件",
-        type: "file",
-        keyName: "file",
-        placeholder: "请上传",
-        onChange: (e, form) => {},
-      },
-      {
           name: "自定义编辑器",
           type: "custom",
           keyName: "editor",
@@ -463,7 +460,162 @@ export default class MyFormTest extends Component {
               />,
       },
       {
-        name: "图片列表",
+        name: "上传文件",//txt、word、excel、zip
+        type: "file",
+        keyName: "file",
+        placeholder: "请上传",
+        onChange: (e, form) => {},
+      },
+      {
+          name: "上传附件",
+          type: "file",
+          keyName: "uploadAttachments",
+          placeholder: "请上传附件",
+          defaultValue:  item.uploadAttachments ? item.uploadAttachments : "",
+          rules: [{ required: true, message: "请上传附件" }],
+          beforeUpload:(file, fileList, form)=>{
+              // 上传文件接口
+              // Api.upload({file: file}).then( 
+              //     res => {
+              //         const url =  res.content[0];
+              //         form.setFieldsValue({'uploadAttachments': url}) ;
+              //     }
+              // );
+              // 返回 false 后变为手动上传文件
+              return false;
+          }
+      },
+      {
+        name: "上传附件",
+        type: "custom",
+        keyName: "uploadAttachments",
+        itemStyle: {marginBottom: 10},
+        render: (form) => {
+            return (
+                <div style={{display: "flex", flexWrap: "nowrap", alignItems: "center"}}>
+                    <Upload
+                        showUploadList={false}
+                        action={file => {this.setState({fileLoading:true, fileName:file.name})
+                        // this.upLoadFile(file,"uploadAttachments")
+                      }}//上传文件
+                    >
+                        {
+                            this.state.fileLoading?
+                                <Button disabled><LoadingOutlined />上传中</Button>:
+                                    this.state.uploadAttachments ? 
+                                        <div className="blue single-ellipsis" style={{width:200}}><Tooltip placement="topLeft" title={this.state.fileName}>{this.state.fileName}</Tooltip></div> : <Button><PlusOutlined/><span>点击上传</span></Button>
+                        }
+                    </Upload>
+                </div>
+            )
+        },
+      {
+        name: "附件",
+        keyName: "attachment",
+        type: "custom",
+        rules: [],
+        render: (form) => {
+            return <Upload
+                showUploadList={false}
+                // 上传文件改变时的状态
+                onChange={info=>{
+                    const {fileList=[]} = this.state
+                    const {file}=info
+                    this.setState({fileLoading:true})
+                    // 通用上传附件，获取返回地址
+                    // Api.upLoadAttachment({file:file})
+                    //     .then(res=>{
+                    //         const {url=""} = res.content
+                    //         // fileList.push(url)
+                    //         // 只允许上传一个文件
+                    //         fileList[0]=url
+                    //         this.setState({
+                    //             fileLoading:false,
+                    //             fileList
+                    //         })
+                    //     })
+                    //     .catch(res=>{
+                    //         this.setState({fileLoading:false})
+                    //     })
+                }}
+                // 上传文件之前的钩子: (file) => {return false},返回 false 后变为手动上传文件(不会出现进度条)
+                beforeUpload={(file, fileList)=>false}
+                withCredentials
+            >
+                {
+                    this.state.fileLoading?
+                        <Button disabled><LoadingOutlined />上传中</Button>:
+                        <div style={{display:"flex",alignItems:"center"}}>
+                            {
+                                !isEmpty(this.state.fileList)?
+                                    <div style={{minWidth:100,maxWidth:460}} className="single-ellipsis">
+                                        <Tooltip title={this.state.fileList[0]} placement="topLeft">
+                                            <span>{this.state.fileList[0]}</span>
+                                        </Tooltip>
+                                    </div> :
+                                    <Button><PlusOutlined/><span>点击上传</span></Button>
+                            }
+                            {
+                                !isEmpty(this.state.fileList)?
+                                    [
+                                        <a  className="blue"
+                                            href="javascript:;" 
+                                            onClick={(e)=>{
+                                                // 阻止默认上传事件
+                                                e&&e.preventDefault() 
+                                                e&&e.stopPropagation()
+                                                //下载通用附件
+                                                // loadFileByGet(window.location.protocol+"//"+window.location.host+COMMON_DOWNLOADATTACHMENT,{url:getFileUrl(this.state.fileList[0])})
+                                            }} style={{margin:"0 12px"}}>下载</a>,
+                                        <a 
+                                            target="_blank" 
+                                            // download={false}
+                                            href="javascript:;"
+                                            onClick={(e)=>{
+                                                // 阻止默认上传事件
+                                                e&&e.preventDefault() 
+                                                e&&e.stopPropagation()
+                                                const url=this.state.fileList[0]
+                                                const arr=url.split(".")
+                                                //新窗口打开路由 +window.location.host
+                                                // const src="http://192.168.0.253:17303"+COMMON_DOWNLOADATTACHMENT+"?url="+arr[0]+".pdf"
+                                                const src=window.location.protocol+"//"+window.location.host+ +"?url="+arr[0]+".pdf"
+                                                // console.log("编码前组装的src参数：",src)
+                                                // window.open("#/Preview?src="+
+                                                //     encodeURIComponent(src)
+                                                // ) 
+                                            }}
+                                        >预览</a>
+                                    ]:""
+                            }
+                        </div>
+                }
+            </Upload>
+        },
+        itemStyle:{width:"100%"}
+    },
+      {
+          name: "单个头像图片",//png、jpg、jpeg
+          type: "custom",
+          keyName: "activatedPic",
+          itemStyle: {marginBottom: 0},
+          render: (form) => {
+              return (
+                  <div style={{display: "flex", flexWrap: "nowrap", alignItems: "center"}}>
+                      <Upload
+                          listType="picture-card"
+                          showUploadList={false}
+                          action={file => this.upLoadFile(file,"activatedPic")}//上传文件
+                          beforeUpload={beforeUpload}//文件类型检测
+                      >
+                          {this.state.picUrl ? <img src={this.state.picUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                      </Upload>
+                  </div>
+              )
+          }
+      },
+      {
+        name: "图片列表",//png、jpg、jpeg
         type: "custom",
         keyName: "breviaryPicture",
         itemStyle: {marginBottom: 0},

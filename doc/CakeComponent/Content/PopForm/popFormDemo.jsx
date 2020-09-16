@@ -414,18 +414,49 @@ export default class PopFormTest extends React.Component {
           onChange: (value, option, form) => {},
         },
         {
-          name: "图片",
+          name: "上传文件",
           type: "file",
-          keyName: "url",
-          placeholder: "请上传图片",
-          defaultValue:  "",//item.url ? item.url : ""
-          rules: [{ required: true, message: "请上传图片", whitespace: true }],
-          handleUploadChange:(info, form)=>{
-              // Api.bannerUploadFile({file: info.file})
-              //     .then((res) => {
-              //         form.setFieldsValue({'url': res.content.url}) ;
-              //     });
-          }
+          keyName: "file",
+          placeholder: "请上传",
+          onChange: (e, form) => {},
+        },
+        {
+            name: "上传附件",
+            type: "file",
+            keyName: "uploadAttachments",
+            placeholder: "请上传附件",
+            defaultValue:  item.uploadAttachments ? item.uploadAttachments : "",
+            rules: [{ required: true, message: "请上传附件" }],
+            beforeUpload:(file, fileList, form)=>{
+                // 上传文件接口
+                // Api.upload({file: file}).then( 
+                //     res => {
+                //         const url =  res.content[0];
+                //         form.setFieldsValue({'uploadAttachments': url}) ;
+                //     }
+                // );
+                // 返回 false 后变为手动上传文件
+                return false;
+            }
+        },
+        {
+          name: "省份",
+          type: "custom",
+          keyName: "provinceId",
+          defaultValue: item.provinceId ? item.provinceId.split(",") : [],
+          render: form=>{
+              return (
+                  <Select mode="multiple" placeholder="请选择省份" allowClear  filterOption={(inputValue, option)=>{
+                      return `${option.children}`.indexOf(inputValue)>-1
+                  }}>
+                      <Option key={"0001"}>北京市</Option>
+                      <Option key={"0002"}>四川省</Option>
+                      <Option key={"0003"}>河北省</Option>
+                      <Option key={"0004"}>湖南省</Option>
+                  </Select>
+              )
+          },
+          rules: [{ required: true, message: "请选择省份"}]
         },
       ],
       onCancel: () => {
