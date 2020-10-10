@@ -569,7 +569,7 @@ export default class PopFormTest extends React.Component {
 					rules: [{ required: true, message: "请填写" }],
 					render: () => (
 						<WangEditor
-						// width={600}  
+						// style={{width:600,height:300}}
 						// uploadImgServer={this.dataUrl + UPLOAD_FILE_DATA}
 						// uploadImgParams={{login_yes:"01450afeea6c4048846ff8121aa8b764"}}
 						// uploadImgHooks={{
