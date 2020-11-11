@@ -134,6 +134,7 @@ export default class MyForm extends React.Component {
 			case "number":
 				return (
 					<InputNumber
+						{...item}
 						disabled={item.disabled}
 						max={item.max ? item.max : Infinity}
 						min={item.min ? item.min : -Infinity}
@@ -147,6 +148,7 @@ export default class MyForm extends React.Component {
 			case "password":
 				return (
 					<Input
+						{...item}
 						type="password"
 						autoComplete="new-password"
 						disabled={item.disabled}
@@ -161,6 +163,7 @@ export default class MyForm extends React.Component {
 			case "verify":
 				return (
 					<Search
+						{...item}
 						className="verify"
 						disabled={false}
 						enterButton={this.state.tipTxt}
@@ -206,6 +209,7 @@ export default class MyForm extends React.Component {
 			case "textarea":
 				return (
 					<TextArea
+						{...item}
 						autosize={{ minRows: item.rows || 2, maxRows: 6 }}
 						disabled={item.disabled}
 						onChange={e => {
@@ -220,6 +224,7 @@ export default class MyForm extends React.Component {
 			case "radio":
 				return (
 					<RadioGroup
+						{...item}
 						buttonStyle="outline"
 						onChange={e => {
 							item.onChange && item.onChange(e, this.formRef);
@@ -238,6 +243,7 @@ export default class MyForm extends React.Component {
 			case "checkbox":
 				return (
 					<CheckboxGroup
+						{...item}
 						disabled={item.disabled}
 						onChange={e => {
 							item.onChange && item.onChange(e, this.formRef);
@@ -250,6 +256,7 @@ export default class MyForm extends React.Component {
 			case "select":
 				return (
 					<Select
+						{...item} //由于select有很多衍生属性：例如 onSearch
 						suffixIcon={<CaretDownOutlined />}
 						disabled={item.disabled}
 						notFoundContent="无"
@@ -280,6 +287,7 @@ export default class MyForm extends React.Component {
 			case "date": // 注：提交方法传出的date值是moment格式
 				return (
 					<DatePicker
+						{...item}
 						disabled={item.disabled}
 						disabledDate={item.disabledDate}
 						//禁用到 今天：(current)=>{return current && current < moment().endOf('day')}
@@ -298,6 +306,7 @@ export default class MyForm extends React.Component {
 			case "dateRange":
 				return (
 					<RangePicker
+						{...item}
 						disabled={item.disabled}
 						disabledDate={item.disabledDate}
 						onChange={(date, dateString) => {

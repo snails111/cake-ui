@@ -474,8 +474,28 @@ export default class PopFormTest extends React.Component {
 		};
 	};
 
-	initData2 = () => {
-		return {
+	getInitialAddModal2 = async (update = "", item = {}) => {
+		// if (update === "update") {
+		// 	if (item.proId) {
+		// 		await Api.queryProjectList({ proId: item.proId }).then(res => {
+		// 			const data = res.content || [];
+		// 			const bussinessListForm = data.map(item => {
+		// 				return { value: item.id, label: item.busName };
+		// 			});
+		// 			this.setState({ bussinessListForm });
+		// 		});
+		// 	}
+		// 	if (item.proId && item.busId) {
+		// 		await Api.queryTypeList({ proId: item.proId, busId: item.busId }).then(res => {
+		// 			const data = res.content || [];
+		// 			const typeListForm = data.map(item => {
+		// 				return { value: item.id, label: item.typeName };
+		// 			});
+		// 			this.setState({ typeListForm });
+		// 		});
+		// 	}
+		// }
+		this.addModalInitData2 = {
 			title: "复杂版",
 			modalWidth: 800,
 			itemList: [
@@ -485,6 +505,62 @@ export default class PopFormTest extends React.Component {
 					keyName: "id",
 					visible: false,
 				},
+				// {
+				// 	name: "项目",
+				// 	type: "select",
+				// 	keyName: "proId",
+				// 	placeholder: "请选择项目",
+				// 	defaultValue: item.proId || "",
+				// 	options: [...this.state.projectList],
+				// 	rules: [{ required: true, message: "请选择项目" }],
+				// 	onChange: (value, option, form) => {
+				// 		Api.queryProjectList({ proId: value }).then(res => {
+				// 			const bussinessListForm = res.content
+				// 				? res.content.map(item => {
+				// 						return { value: item.id, label: item.busName };
+				// 					})
+				// 				: [];
+				// 			this.addModalInitData.itemList[2].options = bussinessListForm;
+				// 			this.addModalInitData.itemList[3].options = [];
+				// 			this.setState({
+				// 				bussinessListForm,
+				// 				typeListForm: [],
+				// 			});
+				// 		});
+				// 		form && form.setFieldsValue({ busId: "", typeId: "" });
+				// 	},
+				// },
+				// {
+				// 	name: "业务",
+				// 	type: "select",
+				// 	keyName: "busId",
+				// 	placeholder: "请选择业务",
+				// 	defaultValue: item.busId || "",
+				// 	options: [...this.state.bussinessListForm],
+				// 	rules: [{ required: true, message: "请选择业务" }],
+				// 	onChange: (value, option, form) => {
+				// 		const proId = form.getFieldValue("proId");
+				// 		Api.queryTypeList({ proId, busId: value }).then(res => {
+				// 			const typeListForm = res.content
+				// 				? res.content.map(item => {
+				// 						return { value: item.id, label: item.typeName };
+				// 					})
+				// 				: [];
+				// 			this.addModalInitData.itemList[3].options = typeListForm;
+				// 			this.setState({ typeListForm });
+				// 		});
+				// 		form && form.setFieldsValue({ typeId: "" });
+				// 	},
+				// },
+				// {
+				// 	name: "类型",
+				// 	type: "select",
+				// 	keyName: "typeId",
+				// 	placeholder: "请选择类型",
+				// 	defaultValue: item.typeId || "",
+				// 	options: [...this.state.typeListForm],
+				// 	rules: [{ required: true, message: "请选择类型" }],
+				// },
 				{
 					name: "上传文件",
 					type: "file",
@@ -690,14 +766,14 @@ const initData=${JSON.stringify(this.initData1(), censor, 2)}
 					<div style={{ width: "48%" }}>
 						<Button
 							onClick={() => {
-								this.setState({ modalVisible2: true });
+								this.getInitialAddModal2("add");
 							}}
 							type="primary"
 						>
-							复杂版
+							新增（复杂版）
 						</Button>
 
-						<PopForm initData={this.initData2()} modalVisible={this.state.modalVisible2}>
+						<PopForm initData={this.addModalInitData2} modalVisible={this.state.modalVisible2}>
 							<div style={{ padding: "10px 24px 0", color: "#1890ff" }}>
 								完善信息后可用新验证登录
 							</div>
@@ -706,10 +782,10 @@ const initData=${JSON.stringify(this.initData1(), censor, 2)}
 						<CodeStatus>{`
 import { PopForm } from "cake-ui"
 
-const initData=${JSON.stringify(this.initData2(), null, 2)}
+const initData=${JSON.stringify(this.addModalInitData2, null, 2)}
 
 <PopForm
-  initData={this.initData2()}
+  initData={this.addModalInitData2}
   modalVisible={this.state.modalVisible2}
 >
   <div style={{padding:"10px 24px 0",color:"#1890ff"}}>完善信息后可用新验证登录</div>

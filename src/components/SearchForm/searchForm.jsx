@@ -189,6 +189,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<InputNumber
+							{...item}
 							disabled={item.disabled}
 							max={item.max}
 							min={item.min}
@@ -203,13 +204,14 @@ export default class SearchForm extends React.Component {
 			case "switch":
 				return (
 					<FormItemContainer item={item}>
-						<Switch checkedChildren="ON" unCheckedChildren="OFF" />
+						<Switch {...item} checkedChildren="ON" unCheckedChildren="OFF" />
 					</FormItemContainer>
 				);
 			case "radio":
 				return (
 					<FormItemContainer item={item}>
 						<RadioGroup
+							{...item}
 							buttonStyle="outline"
 							disabled={item.disabled}
 							onChange={e => {
@@ -231,6 +233,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<CheckTagGroup
+							{...item}
 							disabled={item.disabled}
 							onChange={checkedList => {
 								if (checkedList && checkedList.length > 0) {
@@ -260,6 +263,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<Select
+							{...item}
 							suffixIcon={<CaretDownOutlined />}
 							key={item.value}
 							disabled={item.disabled}
@@ -291,6 +295,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<TreeSelect
+							{...item}
 							allowClear
 							dropdownStyle={{ maxHeight: 300, overflow: "auto" }}
 							multiple
@@ -316,6 +321,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<DatePicker
+							{...item}
 							disabled={item.disabled}
 							disabledDate={item.disabledDate}
 							//禁用到 今天：(current)=>{return current && current < moment().endOf('day')}
@@ -335,6 +341,7 @@ export default class SearchForm extends React.Component {
 				return (
 					<FormItemContainer item={item}>
 						<RangePicker
+							{...item}
 							disabled={item.disabled}
 							disabledDate={item.disabledDate}
 							onChange={(date, dateString) => {

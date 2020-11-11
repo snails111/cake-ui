@@ -50,7 +50,12 @@ export default class AdvanceWangEditor extends Component {
 				"undo",
 				"redo",
 			],
+			uploadFileServer: this.props.uploadFileServer || "", // 上传文件地址
+			uploadFileParams: this.props.uploadFileParams || {}, // 上传文件参数
+			uploadFileHooks: this.props.uploadFileHooks || {}, // 上传文件回调钩子
 			uploadImgServer: this.props.uploadImgServer || "", // 上传图片地址
+			uploadImgParams: this.props.uploadImgParams || {}, // 上传图片参数
+			uploadImgHooks: this.props.uploadImgHooks || {}, // 上传图片回调钩子
 		};
 		this.editor.create();
 		this.editor.txt.html(this.props.value || "");

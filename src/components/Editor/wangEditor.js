@@ -2917,7 +2917,7 @@ UpFile.prototype = {
 
         // tabs 的配置
         const tabsConfig = [{
-            title: '上传文件',
+            title: '上传文件', 
             tpl:config.uploadFileServer? `<div class="w-e-up-img-container">\n                    <div id="${  upTriggerId  }" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="${  upFileId  }" type="file" multiple="multiple"/>\n                    </div>\n                </div>`:'<div>请先配置上传文件服务器地址（uploadFileServer）</div> ',
             events: [{
                 // 触发选择图片
