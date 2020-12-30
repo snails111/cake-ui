@@ -1,6 +1,6 @@
 {
   "name": "cake-ui-w",
-  "version": "4.0.16",
+  "version": "4.0.17",
   "description": "基于antd 4.0版本二次开发cake-ui组件库",
   "main": "lib/index.js",
   "module": "esm/index.js",
