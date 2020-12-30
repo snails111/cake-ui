@@ -7,3 +7,8 @@ coverage/
 .idea/
 .project/
 report.*.*
+yarn.lock
+package-lock.json
+yarn.lock
+.gitignore
+yarn.lock

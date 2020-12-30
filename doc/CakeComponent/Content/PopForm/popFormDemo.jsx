@@ -498,6 +498,8 @@ export default class PopFormTest extends React.Component {
 		this.addModalInitData2 = {
 			title: "复杂版",
 			modalWidth: 800,
+			// formLayout: "double",
+			// formItemLayout: { labelCol: { span: 8 }, wrapperCol: { span: 16 } },
 			itemList: [
 				{
 					name: "ID",
@@ -694,12 +696,78 @@ export default class PopFormTest extends React.Component {
 						);
 					},
 				},
+				// {
+				// 	name: "天线/地线/投注金额（自加一）",
+				// 	type: "custom",
+				// 	keyName: "maxMinNum",
+				// 	defaultValue: item.maxMinNum
+				// 		? JSON.parse(item.maxMinNum)
+				// 		: [{ antenna: "", ground: "", useMoney: "" }],//初始化默认有一个显示
+				// 	rules: [{ required: true, message: "请填写天地线" }],
+				// 	render: () => {
+				// 		return (
+				// 			<Form.List name="maxMinNum">
+				// 				{(fields, { add, remove }) => {
+				// 					return (
+				// 						<>
+				// 							{fields.map((field, index) => (
+				// 								<Space key={field.key} style={{ display: "flex" }} align="baseline">
+				// 									<Form.Item
+				// 										{...field}
+				// 										name={[field.name, "antenna"]}
+				// 										fieldKey={[field.fieldKey, "antenna"]}
+				// 										rules={[{ required: true, message: "请填写天线" }]}
+				// 									>
+				// 										<Input placeholder="请输入天线" />
+				// 									</Form.Item>
+				// 									<Form.Item
+				// 										{...field}
+				// 										name={[field.name, "ground"]}
+				// 										fieldKey={[field.fieldKey, "ground"]}
+				// 										rules={[{ required: true, message: "请填写地线" }]}
+				// 									>
+				// 										<Input placeholder="请输入地线" />
+				// 									</Form.Item>
+				// 									<Form.Item
+				// 										{...field}
+				// 										name={[field.name, "useMoney"]}
+				// 										fieldKey={[field.fieldKey, "useMoney"]}
+				// 										rules={[{ required: true, message: "请填写投注金额" }]}
+				// 									>
+				// 										<Input placeholder="请输入投注金额" />
+				// 									</Form.Item>
+				// 									{fields.length > 1 ? (
+				// 										<MinusCircleOutlined
+				// 											className="dynamic-delete-button"
+				// 											onClick={() => remove(field.name)}
+				// 										/>
+				// 									) : null}
+				// 								</Space>
+				// 							))}
+
+				// 							{/* 新增按钮 */}
+				// 							<Form.Item>
+				// 								<Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+				// 									添加
+				// 								</Button>
+				// 							</Form.Item>
+				// 						</>
+				// 					);
+				// 				}}
+				// 			</Form.List>
+				// 		);
+				// 	},
+				// 	itemStyle: { width: "100%" },
+				// 	formItemLayout: { labelCol: { span: 4 }, wrapperCol: { span: 20 } },
+				// },
 			],
 			onCancel: () => {
 				this.setState({ modalVisible2: false });
 			},
 			onOk: values => {
 				console.log(values, "---onOk");
+				// 自定义组件（自加一）
+				// json.maxMinNum = JSON.stringify(json.maxMinNum);
 			},
 			buttonConfig: {
 				// 若为false则该表单没有按钮

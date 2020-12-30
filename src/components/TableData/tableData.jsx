@@ -36,14 +36,14 @@ export default class TableData extends React.Component {
 		columns: [],
 		loading: false,
 		intervalColor: false,
-		queryData: () => {},
+		queryData: () => { },
 		rowKey: record => record.id,
 		rowSelection: null,
 		size: "default",
 		pagingSize: "default",
 		title: null,
 		scroll: false,
-		onRow: () => {},
+		onRow: () => { },
 		className: "",
 		rowClassName: false,
 		components: {},
@@ -145,12 +145,11 @@ export default class TableData extends React.Component {
 		});
 	};
 	/* 改变分页 */
-	changePage = pageNo => {
+	changePage = (pageNo, pageSize) => {
 		this.setState({
 			loading: this.state.hasLoading,
 		});
-		const { pageInfo } = this.state;
-		this.props.queryData({ pageNo, pageSize: pageInfo.pageSize });
+		this.props.queryData({ pageNo, pageSize });
 	};
 	/* 改变分页条数 */
 	toSelectChange = (page, size) => {
@@ -171,7 +170,7 @@ export default class TableData extends React.Component {
 			pagingSize = "default",
 			title = null,
 			scroll = false,
-			onRow = () => {},
+			onRow = () => { },
 			className,
 			rowClassName,
 			intervalColor = true,
@@ -203,14 +202,14 @@ export default class TableData extends React.Component {
 					pagination={
 						hasPage
 							? {
-									...pageInfo,
-									pageSizeOptions,
-									position,
-									size: pagingSize,
-									onChange: this.changePage,
-									onShowSizeChange: this.toSelectChange,
-									showTotal: total => `共 ${total} 条数据`,
-							  }
+								...pageInfo,
+								pageSizeOptions,
+								position,
+								size: pagingSize,
+								onChange: this.changePage,
+								// onShowSizeChange: this.toSelectChange,
+								showTotal: total => `共 ${total} 条数据`,
+							}
 							: false
 					}
 					className={className}

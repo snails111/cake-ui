@@ -297,6 +297,70 @@ export default class MyFormTest extends Component {
 	};
 	render() {
 		const itemList = [
+			// {
+			//     name: "洲际",
+			//     type: "select",
+			//     keyName: "stateId",
+			//     placeholder: "请选择洲际",
+			//     defaultValue: item.stateId ? item.stateId : "",
+			//     options:[...this.state.stateList],
+			//     rules: [
+			//         {required: true, message: "请选择洲际"}
+			//     ],
+			//     onChange:(value,option,form)=>{
+			//         //获取我们地区列表(根据洲际id)
+			//         Api.getAreaCombineList({stateId:value})
+			//             .then(res=>{
+			//                 const {baseItemList=[]} = this.state
+			//                 if(!isEmpty(baseItemList)){
+			//                     baseItemList[2].options=res.content?res.content.map(item=>{return {value:item.id,label:item.simpleName}}):[]
+			//                     baseItemList[3].options=[]//联赛下拉
+			//                 }
+			//                 this.setState({
+			//                     baseItemList,
+			//                     areaList: res.content?res.content.map(item=>{return {value:item.id,label:item.simpleName}}):[],
+			//                     leagueList:[],//联赛下拉
+			//                 });
+			//             })
+			//         form&&form.setFieldsValue({areaId:'',leagueId:''})
+			//     },
+			// },
+			// {
+			//     name: "地区",
+			//     type: "select",
+			//     keyName: "areaId",
+			//     placeholder: "请选择地区",
+			//     defaultValue: item.areaId ? item.areaId : "",
+			//     options:[...this.state.areaList],
+			//     rules: [
+			//         {required: true, message: "请选择地区"}
+			//     ],
+			//     onChange:(value,option,form)=>{
+			//         //获取我们的联赛列表(根据地区id)
+			//         Api.getLeagueCombineList({areaId:value})
+			//             .then(res=>{
+			//                 const {baseItemList=[]} = this.state
+			//                 if(!isEmpty(baseItemList)){
+			//                     baseItemList[3].options=res.content?res.content.map(item=>{return {value:item.id,label:item.simpleShortName}}):[]
+			//                 }
+			//                 this.setState({
+			//                     baseItemList,
+			//                     leagueList: res.content?res.content.map(item=>{return {value:item.id,label:item.simpleShortName}}):[],
+			//                 });
+			//             })
+			//         form&&form.setFieldsValue({leagueId:''})
+			//     },
+			// },
+			// {
+			//     name: "联赛",
+			//     type: "select",
+			//     keyName: "leagueId",
+			//     placeholder: "请选择联赛",
+			//     defaultValue: item.leagueId ? item.leagueId : "",
+			//     options:[...this.state.leagueList],
+			//     rules: [
+			//         {required: true, message: "请选择联赛"}
+			//     ],
 			{
 				name: "ID",
 				type: "text",
