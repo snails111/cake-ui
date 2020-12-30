@@ -30,10 +30,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lcwebgroup/cake-ui.git"
+    "url": "git+https://github.com/snails111/cake-ui.git"
   },
   "homePage": {
-    "url": "https://lcwebgroup.github.io/cake-ui/doc/dist/index.html#/"
+    "url": "https://snails111.github.io/cake-ui/doc/dist/index.html#/"
   },
   "author": "crisBai",
   "license": "MIT",
